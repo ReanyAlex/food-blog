@@ -1,0 +1,24 @@
+.navbar {
+  background-color: firebrick;
+  border-color: black;
+  /*height: 4rem;*/
+}
+
+.header-text-color {
+  color: white;
+  font-size: 1.25rem;
+  padding-left: 10px;
+}
+
+.header-text-color:hover {
+  color: gold;
+}
+
+.header-logo {
+  color: gold;
+  font-size: 1.75rem;
+}
+
+.header-logo:hover {
+  color: white;
+}

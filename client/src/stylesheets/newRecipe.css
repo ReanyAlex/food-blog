@@ -1,0 +1,15 @@
+label {
+  display: block;
+  position: relative;
+  padding-left: 120px;
+  padding-bottom: 20px;
+}
+label > span {
+  position: absolute;
+  left: 0;
+}
+
+input,
+textarea {
+  font-size: 1.5rem;
+}
