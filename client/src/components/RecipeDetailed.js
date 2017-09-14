@@ -1,29 +1,45 @@
 import React, { Component } from 'react';
 import Header from './Header';
+import Comments from './Comments';
+
 import '../stylesheets/recipeDetailed.css';
 
 class RecipeDetailed extends Component {
   state = {
+    _id: '',
     title: '',
     categories: [],
     image: '',
     description: '',
     ingredients: [],
     detailInstructions: '',
-    imageInstructions: []
+    imageInstructions: [],
+    comments: []
   };
 
-  componentWillUnmount() {
-    console.log('unmount');
+  componentDidUpdate(prevProps, prevState) {
+    console.log('prevState', prevState.comments);
+    if (prevState.comments === this.state.comments) {
+      return;
+    }
+    console.log('update');
+    // this.fetchRecipe();
   }
 
   componentDidMount() {
+    this.fetchRecipeInfo();
+  }
+
+  fetchRecipeInfo() {
     const that = this;
     const id = this.props.match.params.id;
     fetch(`/api/detailed_recipes/${id}`)
       .then(res => res.json())
       .then(function(json) {
+        // console.log(json.recipe[0]);
+        // console.log(json.comments);
         const {
+          _id,
           title,
           categories,
           image,
@@ -31,15 +47,17 @@ class RecipeDetailed extends Component {
           ingredients,
           detailInstructions,
           imageInstructions
-        } = json[0];
+        } = json.recipe[0];
         that.setState({
+          _id,
           title,
           categories,
           image,
           description,
           ingredients,
           detailInstructions,
-          imageInstructions
+          imageInstructions,
+          comments: json.comments
         });
       });
   }
@@ -86,7 +104,6 @@ class RecipeDetailed extends Component {
   }
 
   renderInstructions() {
-    console.log(Array.from(this.state.detailInstructions));
     const instructions = Array.from(this.state.detailInstructions);
     return (
       <ol>
@@ -95,6 +112,10 @@ class RecipeDetailed extends Component {
         })}
       </ol>
     );
+  }
+
+  newComment() {
+    this.fetchRecipeInfo();
   }
 
   render() {
@@ -124,6 +145,11 @@ class RecipeDetailed extends Component {
             {this.renderInstructions()}
           </div>
           {this.renderImageInstructions()}
+          <Comments
+            newComment={() => this.newComment()}
+            comments={this.state.comments}
+            recipeId={this.state._id}
+          />
         </div>
       </div>
     );
