@@ -17,15 +17,6 @@ class RecipeDetailed extends Component {
     comments: []
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log('prevState', prevState.comments);
-    if (prevState.comments === this.state.comments) {
-      return;
-    }
-    console.log('update');
-    // this.fetchRecipe();
-  }
-
   componentDidMount() {
     this.fetchRecipeInfo();
   }
@@ -33,32 +24,12 @@ class RecipeDetailed extends Component {
   fetchRecipeInfo() {
     const that = this;
     const id = this.props.match.params.id;
+
     fetch(`/api/detailed_recipes/${id}`)
       .then(res => res.json())
       .then(function(json) {
-        // console.log(json.recipe[0]);
-        // console.log(json.comments);
-        const {
-          _id,
-          title,
-          categories,
-          image,
-          description,
-          ingredients,
-          detailInstructions,
-          imageInstructions
-        } = json.recipe[0];
-        that.setState({
-          _id,
-          title,
-          categories,
-          image,
-          description,
-          ingredients,
-          detailInstructions,
-          imageInstructions,
-          comments: json.comments
-        });
+        //derstructed incoming object keys match the state objects
+        that.setState({ ...json.recipe[0], comments: json.comments });
       });
   }
 
@@ -92,7 +63,6 @@ class RecipeDetailed extends Component {
 
   renderIngredients() {
     return this.state.ingredients.map(ingredient => {
-      // console.log(ingredient);
       return (
         <li key={ingredient._id}>
           <span>{ingredient.amount} </span>
@@ -114,6 +84,8 @@ class RecipeDetailed extends Component {
     );
   }
 
+  /*when a new comment is added this tells the RecipeDetailed component
+  that a change has been made to its child and it should update its current information*/
   newComment() {
     this.fetchRecipeInfo();
   }

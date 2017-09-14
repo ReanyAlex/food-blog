@@ -30,16 +30,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Route exact path="/" component={Landing} />
-          <Route
-            exact
-            path="/recipes"
-            render={props => (
-              <Recipes
-                search={this.state.search}
-                searchParam={this.searchParam.bind(this)}
-              />
-            )}
-          />
+          <Route exact path="/recipes" component={Recipes} />
           <Route exact path="/:title/:id" component={RecipeDetailed} />
           <Route exact path="/newrecipe" component={NewRecipe} />
           <Route exact path="/about" component={About} />

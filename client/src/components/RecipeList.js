@@ -11,27 +11,19 @@ class RecipeList extends Component {
 
   componentDidMount() {
     this.fetchRecipe();
-    // console.log('mount');
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log('prevState', prevState.search);
     if (prevState.search === this.state.search) {
       return;
     }
-    // console.log('update');
     this.fetchRecipe();
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   this.updateSearch(nextProps.search);
-  // }
 
   renderRecipes() {
     let startingIndex = (this.state.displayIndex - 1) * 15;
     let endingIndex = this.state.displayIndex * 15;
 
-    // console.log(this.state.recipes.slice(startingIndex, endingIndex));
     let recipesToBeDisplayed = this.state.recipes.slice(
       startingIndex,
       endingIndex

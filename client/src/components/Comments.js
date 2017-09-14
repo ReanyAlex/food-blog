@@ -7,8 +7,28 @@ class Comments extends Component {
     newCommentForm: false
   };
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const recipeId = this.props.recipeId;
+    const author = document.querySelector('#author').value;
+    const comment = document.querySelector('#comment').value;
+
+    const newComment = { recipeId, author, comment };
+
+    let url = `/api/comments/:${recipeId}`;
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newComment)
+    });
+
+    this.setState({ newCommentForm: false });
+    this.props.newComment();
   }
 
   renderCommentForm() {
@@ -44,33 +64,6 @@ class Comments extends Component {
         </form>
       </div>
     );
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-
-    const recipeId = this.props.recipeId;
-    const author = document.querySelector('#author').value;
-    const comment = document.querySelector('#comment').value;
-
-    const newComment = { recipeId, author, comment };
-    let url = `/api/comments/:${recipeId}`;
-
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        recipeId,
-        author,
-        comment
-      })
-    });
-
-    this.setState({ newCommentForm: false });
-    this.props.newComment();
   }
 
   renderComments() {

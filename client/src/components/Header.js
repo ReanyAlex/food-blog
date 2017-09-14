@@ -41,18 +41,6 @@ class Header extends Component {
               </Link>
             </li>
           </ul>
-          {/* <form
-            className="form-inline my-2 my-lg-0"
-            onSubmit={e => e.preventDefault()}
-          >
-            <input
-              className="form-control mr-sm-2"
-              type="text"
-              placeholder="Search"
-              aria-label="Search"
-              onChange={e => this.props.searchParam(e.target.value)}
-            />
-          </form> */}
         </div>
       </nav>
     );
