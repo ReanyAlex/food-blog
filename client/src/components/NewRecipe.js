@@ -11,7 +11,7 @@ class NewRecipe extends Component {
     image: '',
     description: '',
     ingredients: '',
-    detailInstructions: '',
+    detailedInstructions: '',
     imageInstructions: '',
     id: ''
   };
@@ -108,16 +108,16 @@ class NewRecipe extends Component {
                 onChange={this.handleChange}
               />
             </label>
-            <label htmlFor="detailInstructions">
+            <label htmlFor="detailedInstructions">
               <span>
                 Detailed <br />Instructions:
               </span>
               <textarea
                 rows="8"
                 cols="40"
-                htmlFor="detailInstructions"
-                name="detailInstructions"
-                value={this.state.detailInstructions}
+                htmlFor="detailedInstructions"
+                name="detailedInstructions"
+                value={this.state.detailedInstructions}
                 onChange={this.handleChange}
               />
             </label>

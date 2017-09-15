@@ -9,7 +9,7 @@ const recipeSchema = new Schema({
   image: String,
   description: String,
   ingredients: [IngredientSchema],
-  detailInstructions: [String],
+  detailedInstructions: [String],
   imageInstructions: [ImageInstructionSchema],
   dateCreated: Date
 });

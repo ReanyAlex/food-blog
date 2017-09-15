@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import Header from './Header';
-import Comments from './Comments';
+import Header from '../Header';
+import Comments from '../comments/Comments';
+import RecipeIngredients from './RecipeDetailedIngredients';
+import RecipeInstructions from './RecipeDetailedInstructions';
+import RecipeDetailedImages from './RecipeDetailedImages';
 
-import '../stylesheets/recipeDetailed.css';
+import '../../stylesheets/recipeDetailed.css';
 
 class RecipeDetailed extends Component {
   state = {
@@ -12,7 +15,7 @@ class RecipeDetailed extends Component {
     image: '',
     description: '',
     ingredients: [],
-    detailInstructions: '',
+    detailedInstructions: '',
     imageInstructions: [],
     comments: []
   };
@@ -42,48 +45,6 @@ class RecipeDetailed extends Component {
     });
   }
 
-  renderImageInstructions() {
-    return this.state.imageInstructions.map(instruction => {
-      return (
-        <div key={instruction._id}>
-          <figure>
-            <img
-              className="recipeDetailed-image-instruction"
-              src={process.env.PUBLIC_URL + `/images/${instruction.image}.jpg`}
-              alt="cooking instruction"
-            />
-            <p className="recipeDetailed-image-caption">
-              {instruction.imageCaption}
-            </p>
-          </figure>
-        </div>
-      );
-    });
-  }
-
-  renderIngredients() {
-    return this.state.ingredients.map(ingredient => {
-      return (
-        <li key={ingredient._id}>
-          <span>{ingredient.amount} </span>
-          <span>{ingredient.measurment} </span>
-          <span>{ingredient.item}</span>
-        </li>
-      );
-    });
-  }
-
-  renderInstructions() {
-    const instructions = Array.from(this.state.detailInstructions);
-    return (
-      <ol>
-        {instructions.map(instruction => {
-          return <li key={instruction}>{instruction}</li>;
-        })}
-      </ol>
-    );
-  }
-
   /*when a new comment is added this tells the RecipeDetailed component
   that a change has been made to its child and it should update its current information*/
   newComment() {
@@ -109,14 +70,14 @@ class RecipeDetailed extends Component {
             alt={this.state.title}
           />
           <div className="recipeDetailed-instructions-container">
-            <h4 className="recipeDetailed-instructions-header">Ingredients</h4>
-            <ul className="recipeDetailed-ingredients">
-              {this.renderIngredients()}
-            </ul>
-            <h4 className="recipeDetailed-instructions-header">Instructions</h4>
-            {this.renderInstructions()}
+            <RecipeIngredients ingredients={this.state.ingredients} />
+            <RecipeInstructions
+              detailedInstructions={this.state.detailedInstructions}
+            />
           </div>
-          {this.renderImageInstructions()}
+          <RecipeDetailedImages
+            imageInstructions={this.state.imageInstructions}
+          />
           <Comments
             newComment={() => this.newComment()}
             comments={this.state.comments}

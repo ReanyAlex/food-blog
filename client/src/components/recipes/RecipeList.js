@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import '../stylesheets/recipeList.css';
+import RecipeDisplayBox from './RecipeDisplayBox';
+
+import '../../stylesheets/recipeList.css';
 
 class RecipeList extends Component {
   state = {
@@ -20,33 +21,6 @@ class RecipeList extends Component {
     this.fetchRecipe();
   }
 
-  renderRecipes() {
-    let startingIndex = (this.state.displayIndex - 1) * 15;
-    let endingIndex = this.state.displayIndex * 15;
-
-    let recipesToBeDisplayed = this.state.recipes.slice(
-      startingIndex,
-      endingIndex
-    );
-
-    return recipesToBeDisplayed.map(recipe => {
-      return (
-        <div key={recipe._id} className="recipeBox col-sm-12 col-m-6 col-lg-4">
-          <Link to={`/${recipe.title}/${recipe._id}`} className="recipe-link">
-            <div className="recipe-img-container">
-              <img
-                className="recipe-img"
-                src={process.env.PUBLIC_URL + `/images/${recipe.image}.jpg`}
-                alt={recipe.title}
-              />
-            </div>
-            <h4 className="recipe-title">{recipe.title}</h4>
-          </Link>
-        </div>
-      );
-    });
-  }
-
   renderRecipePagination() {
     let indexes = this.state.recipes.length / 15;
     let paginationIndex = [];
@@ -56,10 +30,18 @@ class RecipeList extends Component {
     }
 
     return paginationIndex.map(index => {
+      let classname = '';
+
+      if (index === this.state.displayIndex) {
+        classname = 'recipeList-recipe-pagination-current';
+      }
+
+      classname = 'recipeList-recipe-pagination';
+
       return (
         <span
           key={index + 'a'}
-          className="recipeList-recipe-pagination"
+          className={classname}
           onClick={() => this.setState({ displayIndex: index })}
         >
           {index}
@@ -79,6 +61,9 @@ class RecipeList extends Component {
       .then(res => res.json())
       .then(function(json) {
         that.setState({ recipes: json });
+      })
+      .catch(function(err) {
+        console.log(err);
       });
   }
 
@@ -103,7 +88,10 @@ class RecipeList extends Component {
           </form>
         </div>
         <div className="recipeList-recipe-container">
-          {this.renderRecipes()}
+          <RecipeDisplayBox
+            displayIndex={this.state.displayIndex}
+            recipes={this.state.recipes}
+          />
         </div>
         <div className="recipeList-recipe-pagination-div">
           {this.renderRecipePagination()}

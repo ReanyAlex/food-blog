@@ -11,7 +11,7 @@ module.exports = app => {
       image,
       description,
       ingredients,
-      detailInstructions,
+      detailedInstructions,
       imageInstructions
     } = req.body;
 
@@ -31,7 +31,7 @@ module.exports = app => {
       imageCaption: instruction.split(',')[1]
     }));
 
-    detailInstructions = detailInstructions.split('\n');
+    detailedInstructions = detailedInstructions.split('\n');
 
     const recipe = new Recipe({
       title,
@@ -39,7 +39,7 @@ module.exports = app => {
       image,
       description,
       ingredients,
-      detailInstructions,
+      detailedInstructions,
       imageInstructions,
       dateCreated: Date.now()
     });
