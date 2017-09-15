@@ -6,23 +6,15 @@ import * as actions from '../actions';
 import '../stylesheets/app.css';
 
 import Landing from './Landing';
-import Recipes from './Recipes';
+import Recipes from './recipes/Recipes';
 import NewRecipe from './NewRecipe';
-import RecipeDetailed from './RecipeDetailed';
+import RecipeDetailed from './recipes/RecipeDetailed';
 import About from './About';
 import Ingredients from './Ingredients';
 
 class App extends Component {
-  state = {
-    search: ''
-  };
-
   componentDidMount() {
     this.props.fetchUser();
-  }
-
-  searchParam(search) {
-    this.setState({ search });
   }
 
   render() {
@@ -30,16 +22,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Route exact path="/" component={Landing} />
-          <Route
-            exact
-            path="/recipes"
-            render={props => (
-              <Recipes
-                search={this.state.search}
-                searchParam={this.searchParam.bind(this)}
-              />
-            )}
-          />
+          <Route exact path="/recipes" component={Recipes} />
           <Route exact path="/:title/:id" component={RecipeDetailed} />
           <Route exact path="/newrecipe" component={NewRecipe} />
           <Route exact path="/about" component={About} />

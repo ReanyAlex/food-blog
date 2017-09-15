@@ -11,7 +11,7 @@ class NewRecipe extends Component {
     image: '',
     description: '',
     ingredients: '',
-    detailInstructions: '',
+    detailedInstructions: '',
     imageInstructions: '',
     id: ''
   };
@@ -20,9 +20,6 @@ class NewRecipe extends Component {
   handleSubmit = this.handleSubmit.bind(this);
 
   handleChange(event) {
-    // console.log(event.target.value);
-    // console.log(event.target.name);
-
     const state = this.state;
     state[event.target.name] = event.target.value;
 
@@ -32,43 +29,17 @@ class NewRecipe extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    console.log({ ...this.state });
 
-    const {
-      title,
-      categories,
-      image,
-      description,
-      ingredients,
-      detailInstructions,
-      imageInstructions,
-      id
-    } = this.state;
-    //could not get axios to work
     fetch('/api/newrecipe', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        title,
-        categories,
-        image,
-        description,
-        ingredients,
-        detailInstructions,
-        imageInstructions,
-        id
-      })
+      //derstructed state object keys match the object to create a new recipe
+      body: JSON.stringify({ ...this.state })
     });
-
-    // this.setState({
-    //   title: '',
-    //   image: '',
-    //   description: '',
-    //   imageInstructions: '',
-    //   id: ''
-    // });
   }
 
   render() {
@@ -137,16 +108,16 @@ class NewRecipe extends Component {
                 onChange={this.handleChange}
               />
             </label>
-            <label htmlFor="detailInstructions">
+            <label htmlFor="detailedInstructions">
               <span>
                 Detailed <br />Instructions:
               </span>
               <textarea
                 rows="8"
                 cols="40"
-                htmlFor="detailInstructions"
-                name="detailInstructions"
-                value={this.state.detailInstructions}
+                htmlFor="detailedInstructions"
+                name="detailedInstructions"
+                value={this.state.detailedInstructions}
                 onChange={this.handleChange}
               />
             </label>

@@ -9,6 +9,7 @@
   font-weight: 600;
   color: #484848;
   padding-top: 3rem;
+  font-family: Didot, Georgia, Garamond, ‘Times New Roman’, Times, serif;
 }
 
 .recipeDetailed-catagories {
@@ -45,6 +46,8 @@
 }
 
 .recipeDetailed-instructions-header {
+  font-family: Didot, Georgia, Garamond, ‘Times New Roman’, Times, serif;
+  font-weight: 600;
   padding: 0.5rem 0;
   font-style: normal;
 }

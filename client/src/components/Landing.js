@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import '../stylesheets/landing.css';
 
-const Landing = () => (
+export default () => (
   <div className="landing">
     <div id="landing_div">
       <Link to="/recipes" className="landing-link">
@@ -15,5 +15,3 @@ const Landing = () => (
     </div>
   </div>
 );
-
-export default Landing;

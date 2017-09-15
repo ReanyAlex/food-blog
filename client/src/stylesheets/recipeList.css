@@ -96,9 +96,21 @@ img {
   cursor: pointer;
 }
 
+.recipeList-recipe-pagination-current {
+  background-color: gold;
+  padding: 0.25rem 0.5rem;
+  margin-right: 0.5rem;
+  color: firebrick;
+  cursor: pointer;
+}
+
 .recipeList-recipe-pagination:hover {
   background-color: gold;
   color: black;
+}
+
+.recipeList-recipe-pagination-current:hover {
+  color: white;
 }
 
 .col-sm-12 {

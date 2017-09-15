@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const ImageInstructionSchema = require('./imageInstruction');
+const ImageInstructionSchema = require('./ImageInstruction');
 const IngredientSchema = require('./Ingredient');
 
 const recipeSchema = new Schema({
@@ -9,7 +9,7 @@ const recipeSchema = new Schema({
   image: String,
   description: String,
   ingredients: [IngredientSchema],
-  detailInstructions: [String],
+  detailedInstructions: [String],
   imageInstructions: [ImageInstructionSchema],
   dateCreated: Date
 });

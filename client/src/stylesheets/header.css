@@ -1,7 +1,12 @@
 .navbar {
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   background-color: firebrick;
   border-color: black;
   /*height: 4rem;*/
+}
+
+.padding-right {
+  padding-right: 2rem;
 }
 
 .header-text-color {
