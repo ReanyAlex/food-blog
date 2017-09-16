@@ -103,6 +103,7 @@ class NewRecipe extends Component {
       <div>
         <Header />
         <div className="container">
+          <h3>{process.env.REACT_APP_KEY_NAME}</h3>
           <h3>
             {this.props.auth
               ? `logged in as
