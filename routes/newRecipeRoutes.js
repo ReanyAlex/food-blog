@@ -1,23 +1,15 @@
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
+const recipeDataManipulation = require('../middlewares/recipeDataManipulation');
 
 const Recipe = mongoose.model('recipes');
 
 module.exports = app => {
-  app.post('/api/newrecipe', requireLogin, async (req, res) => {
-    let {
-      title,
-      categories,
-      image,
-      description,
-      ingredients,
-      detailedInstructions,
-      imageInstructions
-    } = req.body;
+  app.post('/api/newrecipe', requireLogin, recipeDataManipulation, async (req, res) => {
+    let { title, categories, image, description, ingredients, detailedInstructions, imageInstructions } = req.body;
+    categories = await categories.split(',');
 
-    categories = categories.split(',');
-
-    ingredients = ingredients.split(', ').map(ingredient => ({
+    ingredients = await ingredients.split(', ').map(ingredient => ({
       amount: ingredient.split(' ')[0],
       measurement: ingredient.split(' ')[1],
       item: ingredient
@@ -26,12 +18,12 @@ module.exports = app => {
         .join(' ')
     }));
 
-    imageInstructions = imageInstructions.split('_').map(instruction => ({
+    imageInstructions = await imageInstructions.split('_').map(instruction => ({
       image: instruction.split(',')[0],
       imageCaption: instruction.split(',')[1]
     }));
 
-    detailedInstructions = detailedInstructions.split('\n');
+    detailedInstructions = await detailedInstructions.split('\n');
 
     const recipe = new Recipe({
       title,
@@ -46,7 +38,7 @@ module.exports = app => {
 
     // await console.log(recipe);
     try {
-      await recipe.save();
+      // await recipe.save();
     } catch (err) {
       res.status(422).send(err);
     }
@@ -61,13 +53,13 @@ module.exports = app => {
       return recipe;
     });
     console.log('Updating recipe');
-    //------------
-    recipe.title = req.body.title;
-    recipe.categories = req.body.categories;
-    recipe.image = req.body.image;
-    recipe.description = req.body.description;
+    //------------ updating recipe object
+    recipe.title = await req.body.title;
+    recipe.categories = await req.body.categories;
+    recipe.image = await req.body.image;
+    recipe.description = await req.body.description;
 
-    recipe.ingredients = req.body.ingredients.split(', ').map(ingredient => ({
+    recipe.ingredients = await req.body.ingredients.split(', ').map(ingredient => ({
       amount: ingredient.split(' ')[0],
       measurement: ingredient.split(' ')[1],
       item: ingredient
@@ -75,17 +67,15 @@ module.exports = app => {
         .splice(2)
         .join(' ')
     }));
-    recipe.detailedInstructions = req.body.detailedInstructions.split('\n');
-    recipe.imageInstructions = req.body.imageInstructions
-      .split('_')
-      .map(instruction => ({
-        image: instruction.split(',')[0],
-        imageCaption: instruction.split(',')[1]
-      }));
+    recipe.detailedInstructions = await req.body.detailedInstructions.split('\n');
+    recipe.imageInstructions = await req.body.imageInstructions.split('_').map(instruction => ({
+      image: instruction.split(',')[0],
+      imageCaption: instruction.split(',')[1]
+    }));
 
-    recipe.dateCreated = req.body.dateCreated;
+    recipe.dateCreated = await req.body.dateCreated;
 
-    await console.log(recipe);
+    // await console.log(recipe);
     try {
       await recipe.save();
     } catch (err) {
