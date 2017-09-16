@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const ingredientSchema = new Schema({
   amount: Number,
-  measurment: String,
+  measurement: String,
   item: String
 });
 

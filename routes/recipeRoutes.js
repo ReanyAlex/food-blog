@@ -16,7 +16,6 @@ module.exports = app => {
   app.get('/api/detailed_recipes/:id', async (req, res) => {
     const recipe = await Recipe.find({ _id: req.params.id });
     const comments = await Comment.find({ recipeId: req.params.id });
-    await console.log(comments);
     const recipeObject = { recipe: recipe, comments: comments };
     await res.send(recipeObject);
   });
@@ -29,7 +28,7 @@ module.exports = app => {
       comment,
       dateCreated: Date.now()
     });
-    await console.log(newComment);
+    // await console.log(newComment);
     try {
       await newComment.save();
     } catch (err) {
