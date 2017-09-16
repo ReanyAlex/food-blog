@@ -24,6 +24,7 @@ class App extends Component {
           <Route exact path="/" component={Landing} />
           <Route exact path="/recipes" component={Recipes} />
           <Route exact path="/:title/:id" component={RecipeDetailed} />
+          <Route exact path="/:title/:id/:edit" component={NewRecipe} />
           <Route exact path="/newrecipe" component={NewRecipe} />
           <Route exact path="/about" component={About} />
           <Route exact path="/ingredients" component={Ingredients} />

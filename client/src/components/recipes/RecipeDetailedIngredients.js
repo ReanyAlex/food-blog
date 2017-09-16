@@ -9,7 +9,7 @@ export default ({ ingredients }) => {
           return (
             <li key={ingredient._id}>
               <span>{ingredient.amount} </span>
-              <span>{ingredient.measurment} </span>
+              <span>{ingredient.measurement} </span>
               <span>{ingredient.item}</span>
             </li>
           );

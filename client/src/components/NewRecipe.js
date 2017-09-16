@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
+import NewRecipeForm from './NewRecipeForm';
 // import axios from 'axios';
 import '../stylesheets/newRecipe.css';
 
@@ -13,8 +14,68 @@ class NewRecipe extends Component {
     ingredients: '',
     detailedInstructions: '',
     imageInstructions: '',
-    id: ''
+    id: '',
+    edit: false
   };
+
+  //------------------EDIT MODE -----------------------------
+  componentDidMount() {
+    if (this.props.match.params.edit === 'edit') {
+      this.setState({ edit: true });
+      this.fetchRecipeInfo();
+    }
+  }
+
+  fetchRecipeInfo() {
+    const that = this;
+    const id = this.props.match.params.id;
+
+    fetch(`/api/detailed_recipes/${id}`)
+      .then(res => res.json())
+      .then(function(json) {
+        let ingredients = Array.from(json.recipe[0].ingredients)
+          .map(ingredient => {
+            return `${ingredient.amount} ${ingredient.measurement} ${ingredient.item}`;
+          })
+          .join(' , ');
+
+        let imageInstructions = Array.from(json.recipe[0].imageInstructions)
+          .map(instruction => {
+            return `${instruction.image},${instruction.imageCaption}`;
+          })
+          .join('_');
+
+        let detailedInstructions = Array.from(
+          json.recipe[0].detailedInstructions
+        ).join('\n');
+
+        const recipeObj = {
+          _id: json.recipe[0]._id,
+          title: json.recipe[0].title,
+          image: json.recipe[0].image,
+          description: json.recipe[0].description,
+          dateCreated: json.recipe[0].dateCreated,
+          imageInstructions: imageInstructions,
+          detailedInstructions: detailedInstructions,
+          ingredients: ingredients,
+          categories: json.recipe[0].categories
+        };
+
+        //derstructed incoming object keys match the state objects
+        that.setState({ ...recipeObj, comments: json.comments });
+      });
+  }
+
+  //DELETE ------------------
+
+  handleDelete() {
+    console.log('Delete');
+    fetch(`/api/delete/${this.state._id}`, {
+      method: 'DELETE'
+    });
+  }
+
+  //------------------EDIT MODE -----------------------------
 
   handleChange = this.handleChange.bind(this);
   handleSubmit = this.handleSubmit.bind(this);
@@ -24,15 +85,22 @@ class NewRecipe extends Component {
     state[event.target.name] = event.target.value;
 
     this.setState(state);
-    this.setState({ id: this.props.auth.googleId });
+    this.setState({ id: this.props.auth[process.env.REACT_APP_KEY_NAME] });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log({ ...this.state });
+    let method = '';
+    let url = '';
 
-    fetch('/api/newrecipe', {
-      method: 'POST',
+    this.state.edit ? (method = `PUT`) : (method = 'POST');
+
+    this.state.edit
+      ? (url = `/api/edit/${this.state._id}`)
+      : (url = '/api/newrecipe');
+
+    fetch(url, {
+      method: method,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -50,93 +118,18 @@ class NewRecipe extends Component {
           <h3>
             {this.props.auth ? (
               `logged in as
-            ${this.props.auth.googleId}`
+            ${this.props.auth[process.env.REACT_APP_KEY_NAME]}`
             ) : (
               'not logged in'
             )}
           </h3>
-          <form onSubmit={this.handleSubmit}>
-            <label htmlFor="title">
-              <span>Title:</span>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                value={this.state.title}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label htmlFor="title">
-              <span>Categories:</span>
-              <input
-                type="text"
-                name="categories"
-                id="categories"
-                value={this.state.categories}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label htmlFor="image">
-              <span>Image:</span>
-              <input
-                type="text"
-                name="image"
-                id="image"
-                value={this.state.image}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label htmlFor="description">
-              <span>Description:</span>
-              <textarea
-                rows="8"
-                cols="40"
-                name="description"
-                id="description"
-                value={this.state.description}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label htmlFor="ingredients">
-              <span>Ingedients:</span>
-              <textarea
-                rows="8"
-                cols="40"
-                htmlFor="ingredients"
-                name="ingredients"
-                value={this.state.ingredients}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label htmlFor="detailedInstructions">
-              <span>
-                Detailed <br />Instructions:
-              </span>
-              <textarea
-                rows="8"
-                cols="40"
-                htmlFor="detailedInstructions"
-                name="detailedInstructions"
-                value={this.state.detailedInstructions}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label htmlFor="imageInstructions">
-              <span>
-                Image <br />Instructions:
-              </span>
-              <textarea
-                rows="8"
-                cols="40"
-                htmlFor="imageInstructions"
-                name="imageInstructions"
-                value={this.state.imageInstructions}
-                onChange={this.handleChange}
-              />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
-          <a href="/api/logout">Logout</a>
+          <h3>{this.state.edit ? `Edit Mode` : 'Not in Edit Mode'}</h3>
+          <NewRecipeForm
+            values={this.state}
+            handleSubmit={event => this.handleSubmit(event)}
+            handleChange={event => this.handleChange(event)}
+            handleDelete={() => this.handleDelete()}
+          />
         </div>
       </div>
     );
