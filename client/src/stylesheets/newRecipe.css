@@ -7,9 +7,15 @@ label {
 label > span {
   position: absolute;
   left: 0;
+  width: 90px;
 }
 
 input,
 textarea {
   font-size: 1.5rem;
+}
+
+.delete-button {
+  display: block;
+  margin-top: 5rem;
 }

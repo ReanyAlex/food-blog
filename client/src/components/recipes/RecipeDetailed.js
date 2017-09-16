@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import * as actions from '../../actions';
 import Header from '../Header';
 import Comments from '../comments/Comments';
 import RecipeIngredients from './RecipeDetailedIngredients';
@@ -39,9 +43,9 @@ class RecipeDetailed extends Component {
   renderCatagories() {
     return this.state.categories.map((category, i) => {
       if (i === this.state.categories.length - 1) {
-        return <span key={category}>{category}</span>;
+        return <span key={category + i}>{category}</span>;
       }
-      return <span key={category}>{category},</span>;
+      return <span key={category + i}>{category},</span>;
     });
   }
 
@@ -51,16 +55,33 @@ class RecipeDetailed extends Component {
     this.fetchRecipeInfo();
   }
 
+  renderAdmin() {
+    if (!this.props.auth) {
+      return;
+    }
+
+    if (
+      process.env.REACT_APP_ID_KEY ===
+      this.props.auth[process.env.REACT_APP_KEY_NAME]
+    ) {
+      return (
+        <Link to={`/${this.state.title}/${this.state._id}/edit`}>
+          <span>Edit</span>
+        </Link>
+      );
+    }
+  }
+
   render() {
     return (
       <div>
         <Header />
+        {this.renderAdmin()}
         <div className="container">
           <h1 className="recipeDetailed-title">{this.state.title}</h1>
           <div className="recipeDetailed-catagories">
             Catagories: [ {this.renderCatagories()} ]
           </div>
-
           <h3 className="recipeDetailed-description">
             {this.state.description}
           </h3>
@@ -89,4 +110,8 @@ class RecipeDetailed extends Component {
   }
 }
 
-export default RecipeDetailed;
+function mapStateToProps({ auth }) {
+  return { auth };
+}
+
+export default connect(mapStateToProps, actions)(withRouter(RecipeDetailed));
