@@ -33,36 +33,26 @@ class NewRecipe extends Component {
     fetch(`/api/detailed_recipes/${id}`)
       .then(res => res.json())
       .then(function(json) {
-        let ingredients = Array.from(json.recipe[0].ingredients)
+        //Manipulate the fetched recipe data into displayable
+        //form to make editing easier
+        const recipe = json.recipe[0];
+
+        recipe.ingredients = Array.from(recipe.ingredients)
           .map(ingredient => {
             return `${ingredient.amount} ${ingredient.measurement} ${ingredient.item}`;
           })
           .join(' , ');
 
-        let imageInstructions = Array.from(json.recipe[0].imageInstructions)
+        recipe.imageInstructions = Array.from(recipe.imageInstructions)
           .map(instruction => {
             return `${instruction.image},${instruction.imageCaption}`;
           })
           .join('_');
 
-        let detailedInstructions = Array.from(
-          json.recipe[0].detailedInstructions
-        ).join('\n');
-
-        const recipeObj = {
-          _id: json.recipe[0]._id,
-          title: json.recipe[0].title,
-          image: json.recipe[0].image,
-          description: json.recipe[0].description,
-          dateCreated: json.recipe[0].dateCreated,
-          imageInstructions: imageInstructions,
-          detailedInstructions: detailedInstructions,
-          ingredients: ingredients,
-          categories: json.recipe[0].categories
-        };
+        recipe.detailedInstructions = Array.from(recipe.detailedInstructions).join('\n');
 
         //derstructed incoming object keys match the state objects
-        that.setState({ ...recipeObj, comments: json.comments });
+        that.setState({ ...recipe, comments: json.comments });
       });
   }
 
@@ -95,9 +85,7 @@ class NewRecipe extends Component {
 
     this.state.edit ? (method = `PUT`) : (method = 'POST');
 
-    this.state.edit
-      ? (url = `/api/edit/${this.state._id}`)
-      : (url = '/api/newrecipe');
+    this.state.edit ? (url = `/api/edit/${this.state._id}`) : (url = '/api/newrecipe');
 
     fetch(url, {
       method: method,
@@ -116,12 +104,10 @@ class NewRecipe extends Component {
         <Header />
         <div className="container">
           <h3>
-            {this.props.auth ? (
-              `logged in as
+            {this.props.auth
+              ? `logged in as
             ${this.props.auth[process.env.REACT_APP_KEY_NAME]}`
-            ) : (
-              'not logged in'
-            )}
+              : 'not logged in'}
           </h3>
           <h3>{this.state.edit ? `Edit Mode` : 'Not in Edit Mode'}</h3>
           <NewRecipeForm

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import RecipeDisplayBox from './RecipeDisplayBox';
+import RecipeListBox from './RecipeListBox';
+import RecipeListPagination from './RecipeListPagination';
 
 import '../../stylesheets/recipeList.css';
 
@@ -20,34 +21,10 @@ class RecipeList extends Component {
     }
     this.fetchRecipe();
   }
-
-  renderRecipePagination() {
-    let indexes = this.state.recipes.length / 15;
-    let paginationIndex = [];
-
-    for (let i = 1; i < indexes + 1; i++) {
-      paginationIndex.push(i);
-    }
-
-    return paginationIndex.map(index => {
-      let classname = '';
-
-      if (index === this.state.displayIndex) {
-        classname = 'recipeList-recipe-pagination-current';
-      }
-
-      classname = 'recipeList-recipe-pagination';
-
-      return (
-        <span
-          key={index + 'a'}
-          className={classname}
-          onClick={() => this.setState({ displayIndex: index })}
-        >
-          {index}
-        </span>
-      );
-    });
+  // the updateIndex functions is passed as a prop to the pagination component
+  updateIndex(index) {
+    console.log(index);
+    this.setState({ displayIndex: index });
   }
 
   updateSearch(search) {
@@ -88,13 +65,17 @@ class RecipeList extends Component {
           </form>
         </div>
         <div className="recipeList-recipe-container">
-          <RecipeDisplayBox
+          <RecipeListBox
             displayIndex={this.state.displayIndex}
             recipes={this.state.recipes}
           />
         </div>
         <div className="recipeList-recipe-pagination-div">
-          {this.renderRecipePagination()}
+          <RecipeListPagination
+            updateIndex={this.updateIndex.bind(this)}
+            recipes={this.state.recipes}
+            displayIndex={this.state.displayIndex}
+          />
         </div>
       </div>
     );

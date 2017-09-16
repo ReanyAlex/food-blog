@@ -13,7 +13,7 @@ class CommentForm extends Component {
     const comment = document.querySelector('#comment').value;
 
     const newComment = { recipeId, author, comment };
-    console.log(newComment);
+
     let url = `/api/comments/:${recipeId}`;
 
     fetch(url, {

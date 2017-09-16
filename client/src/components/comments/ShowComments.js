@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default ({ comments }) => {
-  const options = {
+  const dateOptions = {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
@@ -16,7 +16,7 @@ export default ({ comments }) => {
       {comments.map(comment => {
         //formatting date to match users location
         let date = new Date(comment.dateCreated);
-        date = date.toLocaleDateString('en-US', options);
+        date = date.toLocaleDateString('en-US', dateOptions);
 
         return (
           <div key={comment._id} className="comment-container">

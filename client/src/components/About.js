@@ -9,7 +9,8 @@ class About extends Component {
     return (
       <div>
         <Header />
-        <h1>About</h1>
+        <h1>About Me:</h1>
+        <p> My name is Alex and I like to cook</p>
       </div>
     );
   }
