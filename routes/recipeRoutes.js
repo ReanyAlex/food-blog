@@ -1,14 +1,10 @@
 const mongoose = require('mongoose');
-const Path = require('path-parser');
-const { URL } = require('url');
 const Recipe = mongoose.model('recipes');
 const Comment = mongoose.model('comments');
 
 module.exports = app => {
   app.get('/api/recipes/:search?', async (req, res) => {
-    const recipe = await Recipe.find({
-      title: new RegExp(req.params.search, 'i')
-    }).sort({ dateCreated: -1 });
+    const recipe = await Recipe.find({ title: new RegExp(req.params.search, 'i') }).sort({ dateCreated: -1 });
     // await console.log(recipe);
     await res.send(recipe);
   });
@@ -21,13 +17,7 @@ module.exports = app => {
   });
 
   app.post('/api/comments/:recipeId', async (req, res) => {
-    const { recipeId, author, comment } = req.body;
-    const newComment = await new Comment({
-      recipeId,
-      author,
-      comment,
-      dateCreated: Date.now()
-    });
+    const newComment = await new Comment({ ...req.body, dateCreated: Date.now() });
     // await console.log(newComment);
     try {
       await newComment.save();
