@@ -5,7 +5,8 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 require('./models/User');
-require('./models/Recipe');
+require('./models/recipe/Recipe');
+require('./models/Ingredient');
 require('./models/Comment');
 
 require('./services/passport');
@@ -29,6 +30,7 @@ app.use(passport.session());
 require('./routes/authRoutes')(app);
 require('./routes/newRecipeRoutes')(app);
 require('./routes/recipeRoutes')(app);
+require('./routes/ingredientRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

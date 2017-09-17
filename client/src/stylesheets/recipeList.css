@@ -113,13 +113,29 @@ img {
   color: white;
 }
 
+.col-sm-4 {
+  width: 33%;
+}
+
+.col-sm-8 {
+  width: 66%;
+}
+
 .col-sm-12 {
   width: 99%;
 }
 
 @media only screen and (min-width: 576px) {
+  .col-m-3 {
+    width: 24.5%;
+  }
+
   .col-m-6 {
     width: 49.2%;
+  }
+
+  .col-m-9 {
+    width: 74%;
   }
 
   .col-m-12 {
@@ -136,12 +152,20 @@ img {
 }
 
 @media only screen and (min-width: 768px) {
+  .col-lg-3 {
+    width: 24.5%;
+  }
+
   .col-lg-4 {
     width: 32.5%;
   }
 
   .col-lg-6 {
     width: 49.2%;
+  }
+
+  .col-lg-9 {
+    width: 74%;
   }
 
   .recipeBox {

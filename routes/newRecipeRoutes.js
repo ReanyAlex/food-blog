@@ -3,22 +3,35 @@ const requireLogin = require('../middlewares/requireLogin');
 const recipeDataManipulation = require('../middlewares/recipeDataManipulation');
 
 const Recipe = mongoose.model('recipes');
+const Ingredient = mongoose.model('ingredient');
 
 module.exports = app => {
-  app.post('/api/newrecipe', requireLogin, recipeDataManipulation, async (req, res) => {
-    //incoming req.body data minipulated to be stored in
-    //mongo Schema by recipeDataManipulation
-    const recipe = new Recipe({ ...req.body, dateCreated: Date.now() });
-
-    await console.log('final', recipe);
+  app.post('/api/newingredient', requireLogin, async (req, res) => {
+    console.log('posting new ingredient');
+    // console.log(req.body);
+    const ingredient = new Ingredient({ ...req.body, dateCreated: Date.now() });
+    await console.log('final', ingredient);
     try {
-      // await recipe.save();
+      await ingredient.save();
     } catch (err) {
       res.status(422).send(err);
     }
   });
 
-  app.put('/api/edit/:id', recipeDataManipulation, async (req, res) => {
+  app.post('/api/newrecipe', requireLogin, recipeDataManipulation, async (req, res) => {
+    //incoming req.body data minipulated to be stored in
+    //mongo Schema by recipeDataManipulation
+    const recipe = new Recipe({ ...req.body, dateCreated: Date.now() });
+
+    // await console.log('final', recipe);
+    try {
+      await recipe.save();
+    } catch (err) {
+      res.status(422).send(err);
+    }
+  });
+
+  app.put('/api/edit/recipe/:id', requireLogin, recipeDataManipulation, async (req, res) => {
     //incoming req.body data minipulated to be stored in
     //mongo Schema by recipeDataManipulation
     const recipe = await Recipe.findById(req.body._id, (err, recipe) => {
@@ -28,7 +41,7 @@ module.exports = app => {
       }
       return recipe;
     });
-    //------------  recipe object updated from the req.body
+    //recipe object updated from the req.body
     recipe.title = await req.body.title;
     recipe.categories = await req.body.categories;
     recipe.image = await req.body.image;

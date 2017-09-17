@@ -9,7 +9,7 @@ export default props => {
   }
 
   return (
-    <div>
+    <div className="recipeList-recipe-pagination-div">
       {paginationIndex.map(index => {
         let classname = '';
 
@@ -20,11 +20,7 @@ export default props => {
         classname = 'recipeList-recipe-pagination';
 
         return (
-          <span
-            key={index + 'a'}
-            className={classname}
-            onClick={() => props.updateIndex(index)}
-          >
+          <span key={index + 'a'} className={classname} onClick={() => props.updateIndex(index)}>
             {index}
           </span>
         );

@@ -8,13 +8,10 @@ export default ({ displayIndex, recipes }) => {
   let recipesToBeDisplayed = recipes.slice(startingIndex, endingIndex);
 
   return (
-    <div>
+    <div className="recipeList-recipe-container">
       {recipesToBeDisplayed.map(recipe => {
         return (
-          <div
-            key={recipe._id}
-            className="recipeBox col-sm-12 col-m-6 col-lg-4"
-          >
+          <div key={recipe._id} className="recipeBox col-sm-12 col-m-6 col-lg-4">
             <Link to={`/${recipe.title}/${recipe._id}`} className="recipe-link">
               <div className="recipe-img-container">
                 <img
