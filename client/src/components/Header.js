@@ -30,7 +30,7 @@ export default () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/Ingredients" className="nav-link">
+            <Link to="/ingredients" className="nav-link">
               <span className="header-text-color">Ingredients</span>
             </Link>
           </li>

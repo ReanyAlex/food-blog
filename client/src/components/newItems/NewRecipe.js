@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Header from './Header';
+import Header from '../Header';
 import NewRecipeForm from './NewRecipeForm';
 // import axios from 'axios';
-import '../stylesheets/newRecipe.css';
+import '../../stylesheets/newRecipe.css';
 
 class NewRecipe extends Component {
   state = {
@@ -85,7 +85,7 @@ class NewRecipe extends Component {
 
     this.state.edit ? (method = `PUT`) : (method = 'POST');
 
-    this.state.edit ? (url = `/api/edit/${this.state._id}`) : (url = '/api/newrecipe');
+    this.state.edit ? (url = `/api/edit/recipe/${this.state._id}`) : (url = '/api/newrecipe');
 
     fetch(url, {
       method: method,

@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const ingredientSchema = new Schema({
-  amount: Number,
-  measurement: String,
-  item: String
+  name: String,
+  image: String,
+  description: String,
+  dateCreated: Date
 });
 
-module.exports = ingredientSchema;
+mongoose.model('ingredient', ingredientSchema);
