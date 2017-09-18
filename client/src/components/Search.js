@@ -1,18 +1,20 @@
 import React from 'react';
+// styled-components keeped in a seperate file
+import { SearchForm, HeaderTitle, SearchInput } from '../stylesheets/searchStyled';
 
-export default ({ updateSearch }) => {
+export default ({ path, updateSearch }) => {
   return (
-    <form
-      className="recipeList-header-search form-inline  my-l-0 col-m-12 col-lg-6 "
-      onSubmit={e => e.preventDefault()}
-    >
-      <input
-        className="form-control recipeList-header-search-input"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-        onChange={e => updateSearch(e.target.value)}
-      />
-    </form>
+    <div>
+      <HeaderTitle>{path === 'recipes' ? 'Newly added Recipes:' : 'Ingredients:'}</HeaderTitle>
+      <SearchForm onSubmit={e => e.preventDefault()}>
+        <SearchInput
+          type="text"
+          placeholder="Search"
+          aria-label="Search"
+          onChange={e => updateSearch(e.target.value)}
+        />
+      </SearchForm>
+    </div>
   );
 };
+// form-inline

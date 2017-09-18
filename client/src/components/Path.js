@@ -3,13 +3,16 @@ import Header from './Header';
 import ItemList from './ItemList';
 import About from './About';
 
+// styled-components keeped in a seperate file
+import { Container } from '../stylesheets/pathStyled';
+
 export default props => {
   return (
     <div>
       <Header />
-      <div className="container">
+      <Container>
         {props.match.params.path === 'about' ? <About /> : <ItemList match={props.match.params.path} />}
-      </div>
+      </Container>
     </div>
   );
 };

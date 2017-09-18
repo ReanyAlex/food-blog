@@ -8,13 +8,9 @@ module.exports = app => {
     })
   );
 
-  app.get(
-    '/auth/google/callback',
-    passport.authenticate('google'),
-    (req, res) => {
-      res.redirect('/newrecipe');
-    }
-  );
+  app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
+    res.redirect('/newrecipe');
+  });
 
   app.get('/api/logout', (req, res) => {
     req.logout();

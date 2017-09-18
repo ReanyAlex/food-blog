@@ -1,14 +1,14 @@
 import React from 'react';
 import CommentForm from './CommentForm';
-import ShowComments from './ShowComments';
+import CommentBox from './CommentBox';
 
-import '../../stylesheets/comments.css';
+// import '../../stylesheets/comments.css';
 
 export default props => {
   return (
     <div>
       <CommentForm newComment={props.newComment} recipeId={props.recipeId} />
-      <ShowComments comments={props.comments} />
+      <CommentBox comments={props.comments} />
     </div>
   );
 };

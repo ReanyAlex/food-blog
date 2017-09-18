@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import RecipeListBox from './RecipeListBox';
+import RecipeBox from './RecipeBox';
 import IngredientBox from './IngredientBox';
 import Search from './Search';
 import Pagination from './Pagination';
-
-import '../stylesheets/recipeList.css';
-import '../stylesheets/ingredients.css';
+// styled-components keeped in a seperate file
+import { Container, SearchHeader } from '../stylesheets/itemListStyled';
 
 class RecipeList extends Component {
   state = {
@@ -46,9 +45,7 @@ class RecipeList extends Component {
   //fetch data depending on path match and search url
   //access through express either IngredientsSchema or RecipeSchema
   fetchData(path) {
-    console.log(path);
     path = path.toLowerCase();
-    console.log(path);
     const that = this;
     let url = `/api/${path}/${this.state.search}`;
 
@@ -62,30 +59,34 @@ class RecipeList extends Component {
       });
   }
 
+  recipesOrIngredients() {
+    return this.state.path === 'recipes' ? (
+      <RecipeBox displayIndex={this.state.displayIndex} recipes={this.state.recipes} />
+    ) : (
+      <IngredientBox ingredients={this.state.ingredients} />
+    );
+  }
+
+  showPagination() {
+    if (this.state.path !== 'recipes') return;
+    return (
+      <Pagination
+        updateIndex={this.updateIndex.bind(this)}
+        recipes={this.state.recipes}
+        displayIndex={this.state.displayIndex}
+      />
+    );
+  }
+
   render() {
     return (
-      <div className="recipeList-container">
-        <div className="recipeList-container-header">
-          <h3 className="recipeList-header-title col-m-12 col-lg-6">
-            {this.state.path === 'recipes' ? 'Newly added Recipes:' : 'Ingredients:'}
-          </h3>
-          <Search updateSearch={this.updateSearch.bind(this)} />
-        </div>
-        {this.state.path === 'recipes' ? (
-          <RecipeListBox displayIndex={this.state.displayIndex} recipes={this.state.recipes} />
-        ) : (
-          <IngredientBox ingredients={this.state.ingredients} />
-        )}
-        {this.state.path === 'recipes' ? (
-          <Pagination
-            updateIndex={this.updateIndex.bind(this)}
-            recipes={this.state.recipes}
-            displayIndex={this.state.displayIndex}
-          />
-        ) : (
-          ''
-        )}
-      </div>
+      <Container>
+        <SearchHeader>
+          <Search updateSearch={this.updateSearch.bind(this)} path={this.state.path} />
+        </SearchHeader>
+        {this.recipesOrIngredients()}
+        {this.showPagination()}
+      </Container>
     );
   }
 }
