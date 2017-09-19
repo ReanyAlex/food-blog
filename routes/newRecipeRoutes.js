@@ -9,7 +9,11 @@ module.exports = app => {
   app.post('/api/newingredient', requireLogin, async (req, res) => {
     // console.log('posting new ingredient');
     // console.log(req.body);
-    const ingredient = new Ingredient({ ...req.body, dateCreated: Date.now() });
+
+    const ingredientObj = req.body;
+    const { image, description, id, path, edit, name } = ingredientObj;
+
+    const ingredient = new Ingredient({ image, description, id, path, edit, name, dateCreated: Date.now() });
     // await console.log('final', ingredient);
     try {
       await ingredient.save();
@@ -21,7 +25,36 @@ module.exports = app => {
   app.post('/api/newrecipe', requireLogin, recipeDataManipulation, async (req, res) => {
     //incoming req.body data minipulated to be stored in
     //mongo Schema by recipeDataManipulation
-    const recipe = new Recipe({ ...req.body, dateCreated: Date.now() });
+
+    const recipeObj = req.body;
+    console.log(req.body);
+
+    const {
+      title,
+      categories,
+      image,
+      description,
+      ingredients,
+      detailedInstructions,
+      imageInstructions,
+      id,
+      path,
+      edit
+    } = recipeObj;
+
+    const recipe = new Recipe({
+      title,
+      categories,
+      image,
+      description,
+      ingredients,
+      detailedInstructions,
+      imageInstructions,
+      id,
+      path,
+      edit,
+      dateCreated: Date.now()
+    });
 
     // await console.log('final', recipe);
     try {

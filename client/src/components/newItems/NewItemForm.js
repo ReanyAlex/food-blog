@@ -61,9 +61,7 @@ class NewRecipeForm extends Component {
           {this.renderForms()}
           <button onClick={event => this.props.handleSubmit(event)}>
             {/*Commented out to allow to easily add a bunch of dummy recipes  */}
-            <Link to={`/${this.props.values.title}/${this.props.values._id}`}>
-              {this.props.values.edit ? `Submit Edit` : 'Submit'}
-            </Link>
+            <Link to="/">{this.props.values.edit ? `Submit Edit` : 'Submit'}</Link>
           </button>
         </form>
         <a href="/api/logout">Logout</a>
