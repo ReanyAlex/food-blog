@@ -27,7 +27,6 @@ module.exports = app => {
     //mongo Schema by recipeDataManipulation
 
     const recipeObj = req.body;
-    console.log(req.body);
 
     const {
       title,
