@@ -4,7 +4,6 @@ import { Header } from '../../stylesheets/recipeDetailed/recipeDetailedInstructi
 
 export default ({ detailedInstructions }) => {
   const instructions = Array.from(detailedInstructions);
-
   return (
     <div>
       <Header>Instructions</Header>

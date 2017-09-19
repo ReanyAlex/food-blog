@@ -6,7 +6,7 @@ const Nav = styled.nav`
   border-color: black;
 `;
 
-const HeaderItem = styled.li`
+const HeaderItem = styled.span`
   color: white;
   font-size: 1.25rem;
   padding-left: 10px;

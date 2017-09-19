@@ -5,14 +5,8 @@ import { Header, UnorderedList } from '../../stylesheets/recipeDetailed/recipeDe
 export default ({ ingredients }) => {
   return (
     <div>
-      <Header
-      // className="recipeDetailed-instructions-header"
-      >
-        Ingredients
-      </Header>
-      <UnorderedList
-      // className="recipeDetailed-ingredients"
-      >
+      <Header>Ingredients</Header>
+      <UnorderedList>
         {ingredients.map(ingredient => {
           return (
             <li key={ingredient._id}>

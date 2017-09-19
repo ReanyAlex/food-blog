@@ -77,6 +77,9 @@ class RecipeDetailed extends Component {
   }
 
   render() {
+    //formatted to allow access to image folder structure images/recipe_title/imageName.jpg
+    let imagePath = `/images/${this.state.title.toLowerCase().replace(/ /g, '_')}`;
+
     return (
       <div>
         <Header />
@@ -85,12 +88,12 @@ class RecipeDetailed extends Component {
           <TitleHeader>{this.state.title}</TitleHeader>
           <CatagoriesHeader>Catagories: [ {this.renderCatagories()} ]</CatagoriesHeader>
           <DescriptionHeader>{this.state.description}</DescriptionHeader>
-          <Image src={process.env.PUBLIC_URL + `/images/${this.state.image}.jpg`} alt={this.state.title} />
+          <Image src={process.env.PUBLIC_URL + `${imagePath}/${this.state.image}.jpg`} alt={this.state.title} />
           <InstructionsContainer>
             <RecipeIngredients ingredients={this.state.ingredients} />
             <RecipeInstructions detailedInstructions={this.state.detailedInstructions} />
           </InstructionsContainer>
-          <RecipeDetailedImages imageInstructions={this.state.imageInstructions} />
+          <RecipeDetailedImages imageInstructions={this.state.imageInstructions} imagePath={imagePath} />
           <Comments newComment={() => this.newComment()} comments={this.state.comments} recipeId={this.state._id} />
         </RecipeContainer>
       </div>
