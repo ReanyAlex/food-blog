@@ -1,30 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default props => {
-  let indexes = props.recipes.length / 15;
-  let paginationIndex = [];
+// styled-components keeped in a seperate file
+import { Container, PaginationIndex, PaginationIndexCurrent } from '../stylesheets/paginationStyled';
 
-  for (let i = 1; i < indexes + 1; i++) {
-    paginationIndex.push(i);
+class Pagination extends Component {
+  state = {
+    paginationIndex: []
+  };
+
+  componentWillReceiveProps(nextProps) {
+    this.setpaginationIndex(nextProps.recipes.length);
   }
 
-  return (
-    <div className="recipeList-recipe-pagination-div">
-      {paginationIndex.map(index => {
-        let classname = '';
+  setpaginationIndex(recipeLength) {
+    let indexes = recipeLength / 15;
+    let paginationIndex = [];
+    for (let i = 1; i < indexes + 1; i++) {
+      paginationIndex.push(i);
+    }
+    this.setState({ paginationIndex });
+  }
 
-        if (index === props.displayIndex) {
-          classname = 'recipeList-recipe-pagination-current';
-        }
+  renderPagination(index) {
+    if (index === this.props.displayIndex) {
+      return (
+        <PaginationIndexCurrent key={index} onClick={() => this.props.updateIndex(index)}>
+          {index}
+        </PaginationIndexCurrent>
+      );
+    }
+    return (
+      <PaginationIndex key={index} onClick={() => this.props.updateIndex(index)}>
+        {index}
+      </PaginationIndex>
+    );
+  }
 
-        classname = 'recipeList-recipe-pagination';
+  render() {
+    return <Container>{this.state.paginationIndex.map(index => this.renderPagination(index))}</Container>;
+  }
+}
 
-        return (
-          <span key={index + 'a'} className={classname} onClick={() => props.updateIndex(index)}>
-            {index}
-          </span>
-        );
-      })}
-    </div>
-  );
-};
+export default Pagination;

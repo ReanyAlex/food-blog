@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// styled-components keeped in a seperate file
+import { Box, ImageWrapper, Image, Title } from '../stylesheets/recipeBoxStyled';
+//needs some css currently
+import '../stylesheets/recipeBox.css';
+
 export default ({ displayIndex, recipes }) => {
   let startingIndex = (displayIndex - 1) * 15;
   let endingIndex = displayIndex * 15;
@@ -8,21 +13,17 @@ export default ({ displayIndex, recipes }) => {
   let recipesToBeDisplayed = recipes.slice(startingIndex, endingIndex);
 
   return (
-    <div className="recipeList-recipe-container">
+    <div>
       {recipesToBeDisplayed.map(recipe => {
         return (
-          <div key={recipe._id} className="recipeBox col-sm-12 col-m-6 col-lg-4">
+          <Box key={recipe._id}>
             <Link to={`/${recipe.title}/${recipe._id}`} className="recipe-link">
-              <div className="recipe-img-container">
-                <img
-                  className="recipe-img"
-                  src={process.env.PUBLIC_URL + `/images/${recipe.image}.jpg`}
-                  alt={recipe.title}
-                />
-              </div>
-              <h4 className="recipe-title">{recipe.title}</h4>
+              <ImageWrapper>
+                <Image src={process.env.PUBLIC_URL + `/images/${recipe.image}.jpg`} alt={recipe.title} />
+              </ImageWrapper>
+              <Title>{recipe.title}</Title>
             </Link>
-          </div>
+          </Box>
         );
       })}
     </div>

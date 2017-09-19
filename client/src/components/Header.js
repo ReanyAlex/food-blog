@@ -1,15 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import '../stylesheets/header.css';
+import { Nav, HeaderLogo, LastHeaderItem, HeaderItem } from '../stylesheets/headerStyled';
+//using bootstrap
 
 export default () => {
   return (
-    <nav className="navbar navbar-expand-md navbar-light">
+    <Nav className="navbar navbar-expand-md navbar-light">
       <Link className="navbar-brand" to="/">
-        <span className="header-logo">White Man Cooks</span>
+        <HeaderLogo>White Man Cooks</HeaderLogo>
       </Link>
-
       <button
         className="navbar-toggler"
         type="button"
@@ -26,21 +25,21 @@ export default () => {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link to="/recipes" className="nav-link ">
-              <span className="header-text-color">Recipes</span>
+              <HeaderItem>Recipes</HeaderItem>
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/ingredients" className="nav-link">
-              <span className="header-text-color">Ingredients</span>
+              <HeaderItem>Ingredients</HeaderItem>
             </Link>
           </li>
-          <li className="nav-item padding-right">
+          <LastHeaderItem className="nav-item padding-right">
             <Link to="/about" className="nav-link">
-              <span className="header-text-color">About</span>
+              <HeaderItem>About</HeaderItem>
             </Link>
-          </li>
+          </LastHeaderItem>
         </ul>
       </div>
-    </nav>
+    </Nav>
   );
 };

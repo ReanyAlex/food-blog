@@ -9,7 +9,14 @@ import RecipeIngredients from './RecipeDetailedIngredients';
 import RecipeInstructions from './RecipeDetailedInstructions';
 import RecipeDetailedImages from './RecipeDetailedImages';
 
-import '../../stylesheets/recipeDetailed.css';
+import {
+  RecipeContainer,
+  TitleHeader,
+  CatagoriesHeader,
+  DescriptionHeader,
+  Image,
+  InstructionsContainer
+} from '../../stylesheets/recipeDetailed/recipeDetailedStyled';
 
 class RecipeDetailed extends Component {
   state = {
@@ -32,7 +39,7 @@ class RecipeDetailed extends Component {
     const that = this;
     const id = this.props.match.params.id;
 
-    fetch(`/api/detailed_recipes/${id}`)
+    fetch(`/api/detailed_recipe/${id}`)
       .then(res => res.json())
       .then(function(json) {
         //derstructed incoming object keys match the state objects
@@ -45,7 +52,7 @@ class RecipeDetailed extends Component {
       if (i === this.state.categories.length - 1) {
         return <span key={category + i}>{category}</span>;
       }
-      return <span key={category + i}>{category},</span>;
+      return <span key={category + i}>{category}, </span>;
     });
   }
 
@@ -60,12 +67,9 @@ class RecipeDetailed extends Component {
       return;
     }
 
-    if (
-      process.env.REACT_APP_ID_KEY ===
-      this.props.auth[process.env.REACT_APP_KEY_NAME]
-    ) {
+    if (process.env.REACT_APP_ID_KEY === this.props.auth[process.env.REACT_APP_KEY_NAME]) {
       return (
-        <Link to={`/${this.state.title}/${this.state._id}/edit`}>
+        <Link to={`/${this.state.title}/${this.state._id}/edit/recipe`}>
           <span>Edit</span>
         </Link>
       );
@@ -77,34 +81,18 @@ class RecipeDetailed extends Component {
       <div>
         <Header />
         {this.renderAdmin()}
-        <div className="container">
-          <h1 className="recipeDetailed-title">{this.state.title}</h1>
-          <div className="recipeDetailed-catagories">
-            Catagories: [ {this.renderCatagories()} ]
-          </div>
-          <h3 className="recipeDetailed-description">
-            {this.state.description}
-          </h3>
-          <img
-            className="recipeDetailed-image"
-            src={process.env.PUBLIC_URL + `/images/${this.state.image}.jpg`}
-            alt={this.state.title}
-          />
-          <div className="recipeDetailed-instructions-container">
+        <RecipeContainer>
+          <TitleHeader>{this.state.title}</TitleHeader>
+          <CatagoriesHeader>Catagories: [ {this.renderCatagories()} ]</CatagoriesHeader>
+          <DescriptionHeader>{this.state.description}</DescriptionHeader>
+          <Image src={process.env.PUBLIC_URL + `/images/${this.state.image}.jpg`} alt={this.state.title} />
+          <InstructionsContainer>
             <RecipeIngredients ingredients={this.state.ingredients} />
-            <RecipeInstructions
-              detailedInstructions={this.state.detailedInstructions}
-            />
-          </div>
-          <RecipeDetailedImages
-            imageInstructions={this.state.imageInstructions}
-          />
-          <Comments
-            newComment={() => this.newComment()}
-            comments={this.state.comments}
-            recipeId={this.state._id}
-          />
-        </div>
+            <RecipeInstructions detailedInstructions={this.state.detailedInstructions} />
+          </InstructionsContainer>
+          <RecipeDetailedImages imageInstructions={this.state.imageInstructions} />
+          <Comments newComment={() => this.newComment()} comments={this.state.comments} recipeId={this.state._id} />
+        </RecipeContainer>
       </div>
     );
   }

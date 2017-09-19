@@ -7,10 +7,10 @@ const Ingredient = mongoose.model('ingredient');
 
 module.exports = app => {
   app.post('/api/newingredient', requireLogin, async (req, res) => {
-    console.log('posting new ingredient');
+    // console.log('posting new ingredient');
     // console.log(req.body);
     const ingredient = new Ingredient({ ...req.body, dateCreated: Date.now() });
-    await console.log('final', ingredient);
+    // await console.log('final', ingredient);
     try {
       await ingredient.save();
     } catch (err) {
@@ -32,6 +32,7 @@ module.exports = app => {
   });
 
   app.put('/api/edit/recipe/:id', requireLogin, recipeDataManipulation, async (req, res) => {
+    console.log('recipe edit');
     //incoming req.body data minipulated to be stored in
     //mongo Schema by recipeDataManipulation
     const recipe = await Recipe.findById(req.body._id, (err, recipe) => {
@@ -58,14 +59,45 @@ module.exports = app => {
     }
   });
 
-  app.delete('/api/delete/:id', (req, res) => {
-    Recipe.findByIdAndRemove(req.params.id, (err, recipe) => {
-      // console.log(recipe);
-      let response = {
-        message: 'Recipe successfully deleted',
-        id: recipe._id
-      };
-      res.status(200).send(response);
+  app.put('/api/edit/ingredient/:id', async (req, res) => {
+    // console.log('ingredient edit');
+
+    const ingredient = await Ingredient.findById(req.body._id, (err, ingredient) => {
+      // Handle any possible database errors
+      if (err) {
+        res.status(500).send(err);
+      }
+      return ingredient;
     });
+    //ingredient object updated from the req.body
+    ingredient.image = await req.body.image;
+    ingredient.description = await req.body.description;
+    ingredient.name = await req.body.name;
+    // await console.log('ingredient', ingredient);
+    try {
+      await ingredient.save();
+    } catch (err) {
+      res.status(422).send(err);
+    }
+  });
+
+  app.delete('/api/delete/:id/:path', (req, res) => {
+    if (req.params.path === 'recipe') {
+      Recipe.findByIdAndRemove(req.params.id, (err, recipe) => {
+        let response = {
+          message: 'Recipe successfully deleted',
+          id: recipe._id
+        };
+        res.status(200).send(response);
+      });
+    } else {
+      Ingredient.findByIdAndRemove(req.params.id, (err, ingredient) => {
+        let response = {
+          message: 'Ingredient successfully deleted',
+          id: ingredient._id
+        };
+        res.status(200).send(response);
+      });
+    }
   });
 };

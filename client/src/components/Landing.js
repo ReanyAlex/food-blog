@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+// styled-components keeped in a seperate file
+import { LandingContainer, ChineseHeader, EnglishHeader } from '../stylesheets/landingStyled';
+//for hover effect
 import '../stylesheets/landing.css';
 
 export default () => (
-  <div className="landing">
-    <div id="landing_div">
-      <Link to="/recipes" className="landing-link">
-        <div className="landing-header-container">
-          <h1 id="landing_chinese">老外烹饪</h1>
-          <h2 id="landing_english">White Man Cooks</h2>
-        </div>
-      </Link>
-    </div>
-  </div>
+  <LandingContainer>
+    <Link to="/recipes" className="landing-link">
+      <div className="landing-header-container">
+        <ChineseHeader id="landing_chinese">老外烹饪</ChineseHeader>
+        <EnglishHeader id="landing_english">White Man Cooks</EnglishHeader>
+      </div>
+    </Link>
+  </LandingContainer>
 );

@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
 
+// styled-components keeped in a seperate file
+import {
+  Form,
+  InputContainer,
+  AuthorInput,
+  CommentInput,
+  Button,
+  SubmitInput
+} from '../../stylesheets/comments/commentFormStyled';
+
 class CommentForm extends Component {
   state = {
     newCommentForm: false
@@ -7,7 +17,6 @@ class CommentForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
     const recipeId = this.props.recipeId;
     const author = document.querySelector('#author').value;
     const comment = document.querySelector('#comment').value;
@@ -37,38 +46,30 @@ class CommentForm extends Component {
   renderCommentForm() {
     if (!this.state.newCommentForm) {
       return (
-        <button
-          className="comment-button"
+        <Button
+          // className="comment-button"
           onClick={() => this.setState({ newCommentForm: true })}
         >
-          {' '}
           Leave a Comment
-        </button>
+        </Button>
       );
     }
 
     return (
-      <div>
-        <form className="comment-form" onSubmit={this.handleSubmit.bind(this)}>
-          <div className="comment-form-container">
-            <label htmlFor="author">
-              <span>Your Name:</span>
-              <input type="text" name="author" id="author" />
-            </label>
-            <label htmlFor="comment" className="comment-form-comment">
-              <span>Comment:</span>
-              <textarea rows="3" cols="20" name="comment" id="comment" />
-            </label>
-          </div>
-          <button
-            className="comment-form-button float-left"
-            onClick={event => this.cancelForm(event)}
-          >
-            Cancel
-          </button>
-          <input className="comment-form-button float-right" type="submit" />
-        </form>
-      </div>
+      <Form onSubmit={event => this.handleSubmit(event)}>
+        <InputContainer>
+          <label htmlFor="author">
+            <span>Your Name:</span>
+            <AuthorInput type="text" name="author" id="author" />
+          </label>
+          <label htmlFor="comment">
+            <span>Comment:</span>
+            <CommentInput rows="3" cols="20" name="comment" id="comment" />
+          </label>
+        </InputContainer>
+        <Button onClick={event => this.cancelForm(event)}>Cancel</Button>
+        <SubmitInput type="submit" />
+      </Form>
     );
   }
 

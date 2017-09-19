@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-import '../stylesheets/app.css';
-
 import Landing from './Landing';
-// import Ingredients from './ingredients/Ingredients';
 import Path from './Path';
 import RecipeDetailed from './recipeDetailed/RecipeDetailed';
-import NewRecipe from './newItems/NewRecipe';
-import NewIngredient from './newItems/NewIngredient';
+import NewItem from './newItems/NewItem';
+// import NewIngredient from './newItems/NewIngredient';
 
 class App extends Component {
   componentDidMount() {
@@ -20,14 +17,14 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
+        <Switch>
           <Route exact path="/" component={Landing} />
+          <Route exact path="/new/:path" component={NewItem} />
+          {/* <Route exact path="/newingredient" component={NewIngredient} /> */}
           <Route exact path="/:path" component={Path} />
           <Route exact path="/:title/:id" component={RecipeDetailed} />
-          <Route exact path="/:title/:id/:edit" component={NewRecipe} />
-          <Route exact path="/newrecipe" component={NewRecipe} />
-          <Route exact path="/newingredient" component={NewIngredient} />
-        </div>
+          <Route exact path="/:title/:id/:edit/:path" component={NewItem} />
+        </Switch>
       </BrowserRouter>
     );
   }

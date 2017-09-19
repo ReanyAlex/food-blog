@@ -1,10 +1,18 @@
 import React from 'react';
 
+import { Header, UnorderedList } from '../../stylesheets/recipeDetailed/recipeDetailedIngredientsStyled';
+
 export default ({ ingredients }) => {
   return (
     <div>
-      <h4 className="recipeDetailed-instructions-header">Ingredients</h4>
-      <ul className="recipeDetailed-ingredients">
+      <Header
+      // className="recipeDetailed-instructions-header"
+      >
+        Ingredients
+      </Header>
+      <UnorderedList
+      // className="recipeDetailed-ingredients"
+      >
         {ingredients.map(ingredient => {
           return (
             <li key={ingredient._id}>
@@ -14,7 +22,7 @@ export default ({ ingredients }) => {
             </li>
           );
         })}
-      </ul>
+      </UnorderedList>
     </div>
   );
 };
