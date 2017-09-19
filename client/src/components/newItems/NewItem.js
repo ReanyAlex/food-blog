@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../Header';
-import NewRecipeForm from './NewRecipeForm';
-// import axios from 'axios';
-import '../../stylesheets/newRecipe.css';
+import NewItemForm from './NewItemForm';
 
-class NewRecipe extends Component {
+import { Container } from '../../stylesheets/newitems/newItemStyled';
+
+class NewItem extends Component {
   state = {
     title: '',
     categories: '',
@@ -15,52 +15,65 @@ class NewRecipe extends Component {
     detailedInstructions: '',
     imageInstructions: '',
     id: '',
-    edit: false
+    path: '',
+    edit: false,
+    name: ''
   };
 
   //------------------EDIT MODE -----------------------------
   componentDidMount() {
     if (this.props.match.params.edit === 'edit') {
       this.setState({ edit: true });
-      this.fetchRecipeInfo();
+      this.fetchData(this.props.match.params.path);
     }
+
+    this.setState({ path: this.props.match.params.path });
   }
 
-  fetchRecipeInfo() {
+  recipeDataManipulation(recipe) {
+    recipe.ingredients = Array.from(recipe.ingredients)
+      .map(ingredient => {
+        return `${ingredient.amount} ${ingredient.measurement} ${ingredient.item}`;
+      })
+      .join(' , ');
+
+    recipe.imageInstructions = Array.from(recipe.imageInstructions)
+      .map(instruction => {
+        return `${instruction.image},${instruction.imageCaption}`;
+      })
+      .join('_');
+
+    recipe.detailedInstructions = Array.from(recipe.detailedInstructions).join('\n');
+
+    return recipe;
+  }
+
+  //need to update to edit ingredients
+  fetchData(path) {
     const that = this;
     const id = this.props.match.params.id;
-
-    fetch(`/api/detailed_recipes/${id}`)
+    const url = `/api/detailed_${path}/${id}`;
+    fetch(url)
       .then(res => res.json())
       .then(function(json) {
-        //Manipulate the fetched recipe data into displayable
-        //form to make editing easier
-        const recipe = json.recipe[0];
+        if (path === 'recipe') {
+          //Manipulate the fetched recipe data into displayable
+          //form to make editing easier
+          const recipe = that.recipeDataManipulation(json.recipe[0]);
 
-        recipe.ingredients = Array.from(recipe.ingredients)
-          .map(ingredient => {
-            return `${ingredient.amount} ${ingredient.measurement} ${ingredient.item}`;
-          })
-          .join(' , ');
-
-        recipe.imageInstructions = Array.from(recipe.imageInstructions)
-          .map(instruction => {
-            return `${instruction.image},${instruction.imageCaption}`;
-          })
-          .join('_');
-
-        recipe.detailedInstructions = Array.from(recipe.detailedInstructions).join('\n');
-
-        //derstructed incoming object keys match the state objects
-        that.setState({ ...recipe, comments: json.comments });
+          //destructed incoming object keys match the state objects
+          that.setState({ ...recipe, comments: json.comments });
+        } else if (path === 'ingredient') {
+          that.setState({ ...json[0] });
+        }
       });
   }
 
   //DELETE ------------------
 
   handleDelete() {
-    console.log('Delete');
-    fetch(`/api/delete/${this.state._id}`, {
+    // console.log('Delete');
+    fetch(`/api/delete/${this.state._id}/${this.state.path}`, {
       method: 'DELETE'
     });
   }
@@ -85,7 +98,7 @@ class NewRecipe extends Component {
 
     this.state.edit ? (method = `PUT`) : (method = 'POST');
 
-    this.state.edit ? (url = `/api/edit/recipe/${this.state._id}`) : (url = '/api/newrecipe');
+    this.state.edit ? (url = `/api/edit/${this.state.path}/${this.state._id}`) : (url = `/api/new${this.state.path}`);
 
     fetch(url, {
       method: method,
@@ -102,7 +115,7 @@ class NewRecipe extends Component {
     return (
       <div>
         <Header />
-        <div className="container">
+        <Container>
           <h3>
             {this.props.auth
               ? `logged in as
@@ -110,13 +123,14 @@ class NewRecipe extends Component {
               : 'not logged in'}
           </h3>
           <h3>{this.state.edit ? `Edit Mode` : 'Not in Edit Mode'}</h3>
-          <NewRecipeForm
+          <NewItemForm
+            path={this.state.path}
             values={this.state}
             handleSubmit={event => this.handleSubmit(event)}
             handleChange={event => this.handleChange(event)}
             handleDelete={() => this.handleDelete()}
           />
-        </div>
+        </Container>
       </div>
     );
   }
@@ -126,4 +140,4 @@ function mapStateToProps({ auth }) {
   return { auth };
 }
 
-export default connect(mapStateToProps)(NewRecipe);
+export default connect(mapStateToProps)(NewItem);

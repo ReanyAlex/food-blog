@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Button, Label, Span, Input, TextArea } from '../../stylesheets/newitems/newItemForm';
 
-const FORMFIELD = [
+const FORMFIELD = {};
+
+FORMFIELD.RECIPES = [
   { label: 'Title', type: 'text', name: 'title' },
   { label: 'Categories', type: 'text', name: 'categories' },
   { label: 'Image', type: 'text', name: 'image' },
@@ -11,37 +14,41 @@ const FORMFIELD = [
   { label: 'Image Instructions', type: 'textarea', name: 'imageInstructions' }
 ];
 
+FORMFIELD.INGREDIENTS = [
+  { label: 'Name', type: 'text', name: 'name' },
+  { label: 'Image', type: 'text', name: 'image' },
+  { label: 'Description', type: 'text', name: 'description' }
+];
+
 class NewRecipeForm extends Component {
   renderForms() {
-    return FORMFIELD.map(form => {
+    let path = this.props.path === 'recipe' ? 'RECIPES' : 'INGREDIENTS';
+    return FORMFIELD[path].map(form => {
       if (form.type === 'text') {
         return (
-          <label key={form.label} htmlFor={form.label}>
-            <span>{form.label}:</span>
-            <input
+          <Label key={form.label} htmlFor={form.label}>
+            <Span>{form.label}:</Span>
+            <Input
               type={form.type}
               name={form.name}
               id={form.name}
               value={this.props.values[form.name]}
               onChange={event => this.props.handleChange(event)}
             />
-          </label>
+          </Label>
         );
       } else {
         return (
-          //issue when
-          <label key={form.label} htmlFor={form.label}>
-            <span>{form.label.split(' ').join('\n')}:</span>
-            <textarea
-              className="form-ingredients"
+          <Label key={form.label} htmlFor={form.label}>
+            <Span>{form.label.split(' ').join('\n')}:</Span>
+            <TextArea
               rows="8"
               cols="40"
               name={form.name}
               value={this.props.values[form.name]}
-              // onCompositionStart={event => this.props.handleChange(event)}
               onChange={event => this.props.handleChange(event)}
             />
-          </label>
+          </Label>
         );
       }
     });
@@ -54,15 +61,16 @@ class NewRecipeForm extends Component {
           {this.renderForms()}
           <button onClick={event => this.props.handleSubmit(event)}>
             {/*Commented out to allow to easily add a bunch of dummy recipes  */}
-            {/* <Link to={`/${this.props.values.title}/${this.props.values._id}`}> */}
-            {this.props.values.edit ? `Submit Edit` : 'Submit'} {/* </Link> */}
+            <Link to={`/${this.props.values.title}/${this.props.values._id}`}>
+              {this.props.values.edit ? `Submit Edit` : 'Submit'}
+            </Link>
           </button>
         </form>
         <a href="/api/logout">Logout</a>
         {this.props.values.edit ? (
-          <button className="btn btn-danger delete-button" onClick={this.props.handleDelete}>
+          <Button className="btn btn-danger" onClick={this.props.handleDelete}>
             <Link to="/recipes">DELETE</Link>
-          </button>
+          </Button>
         ) : (
           'no delete button'
         )}

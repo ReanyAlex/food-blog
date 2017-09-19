@@ -39,7 +39,7 @@ class RecipeDetailed extends Component {
     const that = this;
     const id = this.props.match.params.id;
 
-    fetch(`/api/detailed_recipes/${id}`)
+    fetch(`/api/detailed_recipe/${id}`)
       .then(res => res.json())
       .then(function(json) {
         //derstructed incoming object keys match the state objects
@@ -69,7 +69,7 @@ class RecipeDetailed extends Component {
 
     if (process.env.REACT_APP_ID_KEY === this.props.auth[process.env.REACT_APP_KEY_NAME]) {
       return (
-        <Link to={`/${this.state.title}/${this.state._id}/edit`}>
+        <Link to={`/${this.state.title}/${this.state._id}/edit/recipe`}>
           <span>Edit</span>
         </Link>
       );

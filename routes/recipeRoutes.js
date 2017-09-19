@@ -9,7 +9,7 @@ module.exports = app => {
     await res.send(recipe);
   });
 
-  app.get('/api/detailed_recipes/:id', async (req, res) => {
+  app.get('/api/detailed_recipe/:id', async (req, res) => {
     const recipe = await Recipe.find({ _id: req.params.id });
     const comments = await Comment.find({ recipeId: req.params.id });
     const recipeObject = { recipe: recipe, comments: comments };

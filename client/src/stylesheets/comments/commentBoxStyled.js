@@ -39,6 +39,7 @@ const PostDate = styled.p`
 
 const Comment = styled.p`
   font-family: Times, 'Times New Roman', Georgia, serif;
+  white-space: pre-line;
   font-size: 1.25rem;
   padding-left: 0.75rem;
   margin-bottom: 0;
