@@ -28,11 +28,7 @@ class IngredientBox extends Component {
         {this.props.ingredients.map(ingredient => {
           return (
             <Box key={ingredient._id}>
-              <Image
-                src={process.env.PUBLIC_URL + `/images/ingredients/${ingredient.image}.jpg`}
-                alt={ingredient.name}
-              />
-
+              <Image src={`/images/ingredients/${ingredient.image}.jpg`} alt={ingredient.name} />
               <Description>
                 <Name>{ingredient.name}</Name>
                 {ingredient.description}

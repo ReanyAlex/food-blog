@@ -88,7 +88,7 @@ class RecipeDetailed extends Component {
           <TitleHeader>{this.state.title}</TitleHeader>
           <CatagoriesHeader>Catagories: [ {this.renderCatagories()} ]</CatagoriesHeader>
           <DescriptionHeader>{this.state.description}</DescriptionHeader>
-          <Image src={process.env.PUBLIC_URL + `${imagePath}/${this.state.image}.jpg`} alt={this.state.title} />
+          <Image src={`${imagePath}/${this.state.image}.jpg`} alt={this.state.title} />
           <InstructionsContainer>
             <RecipeIngredients ingredients={this.state.ingredients} />
             <RecipeInstructions detailedInstructions={this.state.detailedInstructions} />

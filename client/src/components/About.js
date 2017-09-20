@@ -29,7 +29,7 @@ class About extends Component {
       <div>
         <Header>About Me</Header>
         <ParagraphWrapper>
-          <Image left src={process.env.PUBLIC_URL + `/images/about/wedding.jpg`} alt="author's wedding photo" />
+          <Image left src={`/images/about/wedding.jpg`} alt="author's wedding photo" />
           <p>
             I had a chance to live and study in China for a year. While I was there, there were many things I fell in
             love with. The top two being my future wife and the food. Now being back in the United States it's my
@@ -38,7 +38,7 @@ class About extends Component {
         </ParagraphWrapper>
 
         <ParagraphWrapper>
-          <Image src={process.env.PUBLIC_URL + `/images/about/dumplings.jpg`} alt="dumplings" />
+          <Image src={`/images/about/dumplings.jpg`} alt="dumplings" />
           <p>
             In addition to food and cooking, another passion I have is programming. Just like it is with food there is a
             rich history and complexity that lies beneath the surface. I thought what better way to share my interests

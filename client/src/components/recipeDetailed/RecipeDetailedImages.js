@@ -12,7 +12,7 @@ export default ({ imageInstructions, imagePath }) => {
         return (
           <div key={instruction._id}>
             <figure>
-              <Image src={process.env.PUBLIC_URL + `${imagePath}/${instruction.image}.jpg`} alt="cooking instruction" />
+              <Image src={`${imagePath}/${instruction.image}.jpg`} alt="cooking instruction" />
               <Caption>{instruction.imageCaption}</Caption>
             </figure>
           </div>
