@@ -15,7 +15,7 @@ export default ({ displayIndex, recipes }) => {
   return (
     <div>
       {recipesToBeDisplayed.map(recipe => {
-        let imagePath = `images/${recipe.title.toLowerCase().replace(/ /g, '_')}/${recipe.image}.jpg`;
+        let imagePath = `/images/${recipe.title.toLowerCase().replace(/ /g, '_')}/${recipe.image}.jpg`;
         return (
           <Box key={recipe._id}>
             <Link to={`/${recipe.title}/${recipe._id}`} className="recipe-link">
