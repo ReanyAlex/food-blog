@@ -11,6 +11,7 @@ const RecipeContainer = styled.div`
 `;
 
 const TitleHeader = styled.h1`
+  min-width: 330px;
   font-size: 2.5rem;
   font-weight: 600;
   color: #484848;
@@ -25,6 +26,7 @@ const CatagoriesHeader = styled.h3`
 `;
 
 const DescriptionHeader = styled.h3`
+  min-width: 330px;
   font-size: 1.5rem;
   font-style: italic;
   color: slategray;
@@ -32,6 +34,7 @@ const DescriptionHeader = styled.h3`
 `;
 
 const Image = styled.img`
+  min-width: 330px;
   width: 100%;
   margin: 0 auto;
   border: 2px solid lightgray;
@@ -39,6 +42,7 @@ const Image = styled.img`
 `;
 
 const InstructionsContainer = styled.div`
+  min-width: 330px;
   background-color: whiteSmoke;
   border: 1px solid gray;
   font-style: italic;

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Nav = styled.nav`
+  min-width: 330px;
   font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   background-color: firebrick;
   border-color: black;

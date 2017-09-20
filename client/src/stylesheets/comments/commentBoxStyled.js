@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const CommentContainer = styled.div`
+  min-width: 330px;
   background-color: whiteSmoke;
   border: 1px solid lightgray;
   font-size: 1rem;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Form = styled.form`
-  min-width: 400px;
+  min-width: 330px;
   overflow: auto;
   width: 100%;
 

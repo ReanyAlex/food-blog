@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Image = styled.img`
+  min-width: 330px;
   width: 100%;
   margin: 0 auto;
   border: 2px solid lightgray;
