@@ -59,20 +59,11 @@ class CommentForm extends Component {
         <InputContainer>
           <Label htmlFor="author">
             <Span>Your Name:</Span>
-            <AuthorInput
-              type="text"
-              name="author"
-              // id="author"
-            />
+            <AuthorInput required type="text" name="author" id="author" />
           </Label>
           <Label htmlFor="comment">
             <Span>Comment:</Span>
-            <CommentInput
-              rows="3"
-              cols="20"
-              name="comment"
-              // id="comment"
-            />
+            <CommentInput required rows="3" cols="20" name="comment" id="comment" />
           </Label>
         </InputContainer>
         <Button left onClick={event => this.cancelForm(event)}>

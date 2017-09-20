@@ -19,10 +19,14 @@ const HeaderItem = styled.span`
 const HeaderLogo = styled.span`
   padding-left: 0.5rem;
   color: gold;
-  font-size: 1.75rem;
+  font-size: 1.25rem;
 
   &:hover {
     color: white;
+  }
+
+  @media only screen and (min-width: 576px) {
+    font-size: 1.75rem;
   }
 `;
 

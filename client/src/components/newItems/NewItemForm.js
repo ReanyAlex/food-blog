@@ -17,7 +17,7 @@ FORMFIELD.RECIPES = [
 FORMFIELD.INGREDIENTS = [
   { label: 'Name', type: 'text', name: 'name' },
   { label: 'Image', type: 'text', name: 'image' },
-  { label: 'Description', type: 'text', name: 'description' }
+  { label: 'Description', type: 'textarea', name: 'description' }
 ];
 
 class NewRecipeForm extends Component {
