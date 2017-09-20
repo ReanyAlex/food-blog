@@ -21,7 +21,7 @@ export default ({ displayIndex, recipes }) => {
           <Box key={recipe._id}>
             <Link to={`/${recipe.title}/${recipe._id}`} className="recipe-link">
               <ImageWrapper>
-                <Image src={`/${imagePath}/${recipe.image}.jpg`} alt={recipe.title} />
+                <Image src={`${imagePath}/${recipe.image}.jpg`} alt={recipe.title} />
               </ImageWrapper>
               <Title>{recipe.title}</Title>
             </Link>
