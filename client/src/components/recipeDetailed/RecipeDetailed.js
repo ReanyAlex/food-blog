@@ -78,7 +78,7 @@ class RecipeDetailed extends Component {
 
   render() {
     //formatted to allow access to image folder structure images/recipe_title/imageName.jpg
-    let imagePath = `/images/${this.state.title.toLowerCase().replace(/ /g, '_')}`;
+    let imagePath = `/images/${this.state.title.toLowerCase().replace(/ /g, '-')}`;
 
     return (
       <div>
