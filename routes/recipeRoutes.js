@@ -17,8 +17,6 @@ module.exports = app => {
   });
 
   app.post('/api/comments/:recipeId', async (req, res) => {
-    console.log(req.body);
-
     const commentObj = req.body;
     const { recipeId, author, comment } = commentObj;
     const newComment = await new Comment({ recipeId, author, comment, dateCreated: Date.now() });

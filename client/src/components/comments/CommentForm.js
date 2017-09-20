@@ -4,8 +4,10 @@ import React, { Component } from 'react';
 import {
   Form,
   InputContainer,
+  Span,
   AuthorInput,
   CommentInput,
+  Label,
   Button,
   SubmitInput
 } from '../../stylesheets/comments/commentFormStyled';
@@ -58,14 +60,23 @@ class CommentForm extends Component {
     return (
       <Form onSubmit={event => this.handleSubmit(event)}>
         <InputContainer>
-          <label htmlFor="author">
-            <span>Your Name:</span>
-            <AuthorInput type="text" name="author" id="author" />
-          </label>
-          <label htmlFor="comment">
-            <span>Comment:</span>
-            <CommentInput rows="3" cols="20" name="comment" id="comment" />
-          </label>
+          <Label htmlFor="author">
+            <Span>Your Name:</Span>
+            <AuthorInput
+              type="text"
+              name="author"
+              // id="author"
+            />
+          </Label>
+          <Label htmlFor="comment">
+            <Span>Comment:</Span>
+            <CommentInput
+              rows="3"
+              cols="20"
+              name="comment"
+              // id="comment"
+            />
+          </Label>
         </InputContainer>
         <Button onClick={event => this.cancelForm(event)}>Cancel</Button>
         <SubmitInput type="submit" />

@@ -14,6 +14,8 @@ const LandingContainer = styled.div`
 
 const ChineseHeader = styled.h1`
   font-family: KaiTi, STKaiti;
+  margin: 0 auto;
+  width: 70%;
   color: red;
   font-size: 5.5rem;
   font-weight: 100;
@@ -21,6 +23,9 @@ const ChineseHeader = styled.h1`
   @media only screen and (min-width: 576px) {
     margin-top: 3rem;
     font-size: 6rem;
+  }
+  @media only screen and (min-width: 768px) {
+    width: 100%;
   }
 `;
 

@@ -10,7 +10,7 @@ export default () => (
     <Link to="/recipes" className="landing-link">
       <div className="landing-header-container">
         <ChineseHeader id="landing_chinese">老外烹饪</ChineseHeader>
-        <EnglishHeader id="landing_english">White Man Cooks</EnglishHeader>
+        <EnglishHeader id="landing_english">American Cooks Chinese</EnglishHeader>
       </div>
     </Link>
   </LandingContainer>

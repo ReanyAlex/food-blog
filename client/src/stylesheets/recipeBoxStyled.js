@@ -5,33 +5,34 @@ const Box = styled.div`
   vertical-align: top;
   display: inline-block;
   margin: 0.4%;
+  margin-bottom: 1rem;
   padding: 0.75%;
 
   @media only screen and (min-width: 576px) {
     width: 49.2%;
 
-    height: 275px;
+    ${'' /* height: 275px; */}
   }
 
   @media only screen and (min-width: 768px) {
     width: 32.5%;
 
-    height: 275px;
+    ${'' /* height: 275px; */}
   }
 
   @media only screen and (min-width: 990px) {
-    height: 330px;
+    ${'' /* height: 330px; */}
   }
 
   @media only screen and (min-width: 1200px) {
-    height: 375px;
+    ${'' /* height: 375px; */}
   }
 `;
 
 const ImageWrapper = styled.div`
   margin: 0 auto;
   width: 100%;
-  height: 80%;
+  ${'' /* height: 80%; */};
 `;
 
 const Image = styled.img`

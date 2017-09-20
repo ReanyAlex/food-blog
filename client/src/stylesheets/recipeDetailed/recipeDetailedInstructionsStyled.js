@@ -8,4 +8,6 @@ const Header = styled.h4`
   margin: 0;
 `;
 
-export { Header };
+const InstructionItem = styled.li`padding-right: 1rem;`;
+
+export { Header, InstructionItem };

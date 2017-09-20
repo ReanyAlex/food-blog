@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Header } from '../../stylesheets/recipeDetailed/recipeDetailedInstructionsStyled';
+import { Header, InstructionItem } from '../../stylesheets/recipeDetailed/recipeDetailedInstructionsStyled';
 
 export default ({ detailedInstructions }) => {
   const instructions = Array.from(detailedInstructions);
@@ -9,7 +9,7 @@ export default ({ detailedInstructions }) => {
       <Header>Instructions</Header>
       <ol>
         {instructions.map(instruction => {
-          return <li key={instruction}>{instruction}</li>;
+          return <InstructionItem key={instruction}>{instruction}</InstructionItem>;
         })}
       </ol>
     </div>

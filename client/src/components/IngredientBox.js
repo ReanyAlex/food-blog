@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import * as actions from '../actions';
 
 // styled-components keeped in a seperate file
-import { Box, Image, DescriptionWrapper, Name, Description } from '../stylesheets/ingredientBoxStyled';
+import { Box, Image, Name, Description } from '../stylesheets/ingredientBoxStyled';
 
 class IngredientBox extends Component {
   renderAdmin(name, id) {
@@ -28,11 +28,15 @@ class IngredientBox extends Component {
         {this.props.ingredients.map(ingredient => {
           return (
             <Box key={ingredient._id}>
-              <Image src={process.env.PUBLIC_URL + `/images/${ingredient.image}.jpg`} alt={ingredient.name} />
-              <DescriptionWrapper>
+              <Image
+                src={process.env.PUBLIC_URL + `/images/ingredients/${ingredient.image}.jpg`}
+                alt={ingredient.name}
+              />
+
+              <Description>
                 <Name>{ingredient.name}</Name>
-                <Description>{ingredient.description}</Description>
-              </DescriptionWrapper>
+                {ingredient.description}
+              </Description>
               {this.renderAdmin(ingredient.name, ingredient._id)}
             </Box>
           );

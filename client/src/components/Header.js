@@ -7,7 +7,7 @@ export default () => {
   return (
     <Nav className="navbar navbar-expand-md navbar-light">
       <Link className="navbar-brand" to="/">
-        <HeaderLogo>White Man Cooks</HeaderLogo>
+        <HeaderLogo>American Cooks Chinese</HeaderLogo>
       </Link>
       <button
         className="navbar-toggler"

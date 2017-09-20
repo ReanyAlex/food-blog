@@ -7,7 +7,8 @@ import Landing from './Landing';
 import Path from './Path';
 import RecipeDetailed from './recipeDetailed/RecipeDetailed';
 import NewItem from './newItems/NewItem';
-// import NewIngredient from './newItems/NewIngredient';
+
+require('../stylesheets/app.css');
 
 class App extends Component {
   componentDidMount() {
@@ -20,7 +21,6 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route exact path="/new/:path" component={NewItem} />
-          {/* <Route exact path="/newingredient" component={NewIngredient} /> */}
           <Route exact path="/:path" component={Path} />
           <Route exact path="/:title/:id" component={RecipeDetailed} />
           <Route exact path="/:title/:id/:edit/:path" component={NewItem} />
