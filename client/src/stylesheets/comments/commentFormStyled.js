@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Form = styled.form`
+  min-width: 400px;
   overflow: auto;
   width: 100%;
 
@@ -51,21 +52,30 @@ const Button = styled.button`
   font-size: 1rem;
   height: 40px;
   text-align: center;
-  width: 160px;
+  width: 80%;
   border-radius: 40px;
   background: #fff;
   border: 2px solid gold;
   cursor: pointer;
   transition: all 0.25s ease;
-  margin: 1rem 0.625rem 2rem 0;
+  margin: 0.5rem auto;
+  display: block;
 
   &:hover {
     color: white;
     background: firebrick;
     border: 1px solid black;
   }
+  @media only screen and (min-width: 576px) {
+    margin: 1rem 0.625rem 2rem 0;
+    display: inline-block;
+    float: ${props => (props.left ? 'left' : 'right')};
+    width: 175px;
+  }
 
   @media only screen and (min-width: 768px) {
+    margin: 1rem 0.625rem 2rem 0;
+    display: inline-block;
     width: 175px;
   }
 
@@ -75,7 +85,8 @@ const Button = styled.button`
 `;
 
 const SubmitInput = styled.input`
-  font-size: 1rem;
+  display: none;
+  ${'' /* font-size: 1rem;
   height: 40px;
   text-align: center;
   width: 175px;
@@ -84,14 +95,20 @@ const SubmitInput = styled.input`
   border: 2px solid gold;
   cursor: pointer;
   transition: all 0.25s ease;
-  margin: 1rem 0.625rem 2rem 0;
-  float: right;
+  margin: 0 auto;
 
   &:hover {
     color: white;
     background: firebrick;
     border: 1px solid black;
   }
+
+  @media only screen and (min-width: 768px) {
+    margin: 1rem 0.625rem 2rem 0;
+    display: inline-block;
+    float: right;
+    width: 175px;
+  } */};
 `;
 
 export { Form, InputContainer, Span, AuthorInput, CommentInput, Label, Button, SubmitInput };
