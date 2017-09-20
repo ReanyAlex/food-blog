@@ -42,7 +42,8 @@ class About extends Component {
           <p>
             In addition to food and cooking, another passion I have is programming. Just like it is with food there is a
             rich history and complexity that lies beneath the surface. I thought what better way to share my interests
-            than to combine them.
+            than to combine them. I used the skills I obtained in programming to create this site so that I could share
+            my passion of both.
           </p>
           <p>
             Feel free to reach out to me if you have any questions about recipes, the site, or anything at all.
