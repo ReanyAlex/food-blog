@@ -15,13 +15,12 @@ export default ({ displayIndex, recipes }) => {
   return (
     <div>
       {recipesToBeDisplayed.map(recipe => {
-        let imagePath = `/images/${recipe.title.toLowerCase().replace(/ /g, '_')}`;
-        console.log(process.env.PUBLIC_URL);
+        let imagePath = `images/${recipe.title.toLowerCase().replace(/ /g, '_')}/${recipe.image}.jpg`;
         return (
           <Box key={recipe._id}>
             <Link to={`/${recipe.title}/${recipe._id}`} className="recipe-link">
               <ImageWrapper>
-                <Image src={process.env.PUBLIC_URL + `${imagePath}/${recipe.image}.jpg`} alt={recipe.title} />
+                <Image src={imagePath} alt={recipe.title} />
               </ImageWrapper>
               <Title>{recipe.title}</Title>
             </Link>
