@@ -38,7 +38,7 @@ class About extends Component {
         </ParagraphWrapper>
 
         <ParagraphWrapper>
-          <Image src={process.env.PUBLIC_URL + `/images/about/dumplings.jpg`} alt="author's wedding photo" />
+          <Image src={process.env.PUBLIC_URL + `/images/about/dumplings.jpg`} alt="dumplings" />
           <p>
             In addition to food and cooking, another passion I have is programming. Just like it is with food there is a
             rich history and complexity that lies beneath the surface. I thought what better way to share my interests
