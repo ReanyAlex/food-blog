@@ -69,11 +69,11 @@ const Button = styled.button`
   @media only screen and (min-width: 768px) {
     margin: 1rem 0.625rem 2rem 0;
     float: ${props => (props.float ? props.float : 'none')};
-    width: 225px;
+    width: 200px;
   }
 
   @media only screen and (min-width: 990px) {
-    width: 300px;
+    width: 200px;
   }
 `;
 
