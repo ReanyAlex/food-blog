@@ -47,11 +47,7 @@ class CommentForm extends Component {
 
   renderCommentForm() {
     if (!this.state.newCommentForm) {
-      return (
-        <Button left onClick={() => this.setState({ newCommentForm: true })}>
-          Leave a Comment
-        </Button>
-      );
+      return <Button onClick={() => this.setState({ newCommentForm: true })}>Leave a Comment</Button>;
     }
 
     return (
@@ -66,10 +62,10 @@ class CommentForm extends Component {
             <CommentInput required rows="3" cols="20" name="comment" id="comment" />
           </Label>
         </InputContainer>
-        <Button left onClick={event => this.cancelForm(event)}>
+        <Button float="left" onClick={event => this.cancelForm(event)}>
           Cancel
         </Button>
-        <Button right>
+        <Button float="right">
           <SubmitInput type="submit" />
           Submit
         </Button>

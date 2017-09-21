@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Form = styled.form`
-  min-width: 330px;
+  min-width: 320px;
   overflow: auto;
   width: 100%;
 
@@ -66,49 +66,17 @@ const Button = styled.button`
     background: firebrick;
     border: 1px solid black;
   }
-  @media only screen and (min-width: 576px) {
-    margin: 1rem 0.625rem 2rem 0;
-    display: inline-block;
-    float: ${props => (props.left ? 'left' : 'right')};
-    width: 175px;
-  }
-
   @media only screen and (min-width: 768px) {
     margin: 1rem 0.625rem 2rem 0;
-    display: inline-block;
-    width: 175px;
+    float: ${props => (props.float ? props.float : 'none')};
+    width: 225px;
   }
 
   @media only screen and (min-width: 990px) {
-    width: 200px;
+    width: 300px;
   }
 `;
 
-const SubmitInput = styled.input`
-  display: none;
-  ${'' /* font-size: 1rem;
-  height: 40px;
-  text-align: center;
-  width: 175px;
-  border-radius: 40px;
-  background: #fff;
-  border: 2px solid gold;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  margin: 0 auto;
-
-  &:hover {
-    color: white;
-    background: firebrick;
-    border: 1px solid black;
-  }
-
-  @media only screen and (min-width: 768px) {
-    margin: 1rem 0.625rem 2rem 0;
-    display: inline-block;
-    float: right;
-    width: 175px;
-  } */};
-`;
+const SubmitInput = styled.input`display: none;`;
 
 export { Form, InputContainer, Span, AuthorInput, CommentInput, Label, Button, SubmitInput };
