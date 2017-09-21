@@ -27,6 +27,9 @@ const CatagoriesHeader = styled.h3`
 
 const DescriptionHeader = styled.h3`
   white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
   min-width: 320px;
   font-size: 1.5rem;
   font-style: italic;
