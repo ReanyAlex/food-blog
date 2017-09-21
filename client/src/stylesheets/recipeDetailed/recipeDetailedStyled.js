@@ -26,6 +26,7 @@ const CatagoriesHeader = styled.h3`
 `;
 
 const DescriptionHeader = styled.h3`
+  white-space: pre-wrap;
   min-width: 320px;
   font-size: 1.5rem;
   font-style: italic;

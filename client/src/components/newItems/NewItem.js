@@ -35,7 +35,7 @@ class NewItem extends Component {
       .map(ingredient => {
         return `${ingredient.amount} ${ingredient.measurement} ${ingredient.item}`;
       })
-      .join(' , ');
+      .join(', ');
 
     recipe.imageInstructions = Array.from(recipe.imageInstructions)
       .map(instruction => {
