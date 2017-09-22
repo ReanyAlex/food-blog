@@ -25,7 +25,7 @@ class RecipeList extends Component {
     this.setState({ path: nextProps.match });
     this.fetchData(nextProps.match);
   }
-  //data fetch when type in the searcg field
+  //data fetch when type in the search field
   componentDidUpdate(prevProps, prevState) {
     if (prevState.search === this.state.search) {
       return;
