@@ -19,7 +19,7 @@ class IngredientBox extends Component {
       process.env.REACT_APP_ID_KEY === 'admin'
     ) {
       return (
-        <Link to={`/${name}/${id}/edit/ingredient`}>
+        <Link to={`${name}/${id}/edit/ingredient`}>
           <span>Edit</span>
         </Link>
       );
