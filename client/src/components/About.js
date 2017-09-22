@@ -47,6 +47,7 @@ class About extends Component {
           </p>
           <p>
             Feel free to reach out to me if you have any questions about recipes, the site, or anything at all.
+            <br />
             <a href="mailto:Reanyalex@gmail.com?Subject=Food%20Blog" target="_top">
               Reanyalex@gmail.com
             </a>
