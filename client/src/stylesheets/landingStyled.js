@@ -25,7 +25,7 @@ const ChineseHeader = styled.h1`
     font-size: 6rem;
   }
   @media only screen and (min-width: 768px) {
-    width: 100%;
+    width: 90%;
   }
 `;
 
