@@ -67,7 +67,11 @@ class RecipeDetailed extends Component {
       return;
     }
 
-    if (process.env.REACT_APP_ID_KEY === this.props.auth[process.env.REACT_APP_KEY_NAME]) {
+    if (
+      process.env.REACT_APP_ID_KEY === this.props.auth[process.env.REACT_APP_KEY_NAME] ||
+      //for developement only
+      process.env.REACT_APP_ID_KEY === 'admin'
+    ) {
       return (
         <Link to={`/${this.state.title}/${this.state._id}/edit/recipe`}>
           <span>Edit</span>
