@@ -25,7 +25,7 @@ class CommentForm extends Component {
 
     const newComment = { recipeId, author, comment };
 
-    let url = `/api/comments/:${recipeId}`;
+    let url = `/api/comments`;
 
     fetch(url, {
       method: 'POST',

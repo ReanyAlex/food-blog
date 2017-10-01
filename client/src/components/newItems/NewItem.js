@@ -48,18 +48,20 @@ class NewItem extends Component {
     return recipe;
   }
 
-  //need to update to edit ingredients
   fetchData(path) {
     const that = this;
-    const id = this.props.match.params.id;
-    const url = `/api/detailed_${path}/${id}`;
+    const name = this.props.match.params.title.toLowerCase();
+    const url = `/api/${path}s?search=${name}`;
+
     fetch(url)
-      .then(res => res.json())
-      .then(function(json) {
+      .then(function(response) {
+        return response.json();
+      })
+      .then(json => {
         if (path === 'recipe') {
           //Manipulate the fetched recipe data into displayable
           //form to make editing easier
-          const recipe = that.recipeDataManipulation(json.recipe[0]);
+          const recipe = that.recipeDataManipulation(json[0]);
 
           //destructed incoming object keys match the state objects
           that.setState({ ...recipe, comments: json.comments });
@@ -73,7 +75,9 @@ class NewItem extends Component {
 
   handleDelete() {
     // console.log('Delete');
-    fetch(`/api/delete/${this.state._id}/${this.state.path}`, {
+    const id = this.props.match.params.id;
+    const url = `/api/${this.state.path}s/${id}`;
+    fetch(url, {
       method: 'DELETE'
     });
   }
@@ -95,10 +99,36 @@ class NewItem extends Component {
     event.preventDefault();
     let method = '';
     let url = '';
+    let headerBody = {};
 
     this.state.edit ? (method = `PUT`) : (method = 'POST');
 
-    this.state.edit ? (url = `/api/edit/${this.state.path}/${this.state._id}`) : (url = `/api/new${this.state.path}`);
+    this.state.edit ? (url = `/api/${this.state.path}s/${this.state._id}`) : (url = `/api/${this.state.path}s`);
+
+    if (this.state.path === 'ingredients') {
+      const { name, image, description } = this.state;
+      headerBody = { name, image, description };
+    } else {
+      const {
+        title,
+        categories,
+        image,
+        description,
+        ingredients,
+        detailedInstructions,
+        imageInstructions
+      } = this.state;
+
+      headerBody = {
+        title,
+        categories,
+        image,
+        description,
+        ingredients,
+        detailedInstructions,
+        imageInstructions
+      };
+    }
 
     fetch(url, {
       method: method,
@@ -106,8 +136,7 @@ class NewItem extends Component {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      //derstructed state object keys match the object to create a new recipe
-      body: JSON.stringify({ ...this.state })
+      body: JSON.stringify(headerBody)
     });
   }
 

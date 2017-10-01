@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const imageInstructionSchema = new Schema({
+const ImageInstructionSchema = new Schema({
   image: String,
   imageCaption: String
 });
 
-module.exports = imageInstructionSchema;
+module.exports = ImageInstructionSchema;

@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const recipeIngredientSchema = new Schema({
+const RecipeIngredientSchema = new Schema({
   amount: Number,
   measurement: String,
   item: String
 });
 
-module.exports = recipeIngredientSchema;
+module.exports = RecipeIngredientSchema;

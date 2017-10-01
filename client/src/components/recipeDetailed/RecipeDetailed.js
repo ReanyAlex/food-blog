@@ -27,8 +27,7 @@ class RecipeDetailed extends Component {
     description: '',
     ingredients: [],
     detailedInstructions: '',
-    imageInstructions: [],
-    comments: []
+    imageInstructions: []
   };
 
   componentDidMount() {
@@ -37,13 +36,13 @@ class RecipeDetailed extends Component {
 
   fetchRecipeInfo() {
     const that = this;
-    const id = this.props.match.params.id;
-
-    fetch(`/api/detailed_recipe/${id}`)
+    const title = this.props.match.params.title;
+    const url = `/api/recipes?search=${title}`;
+    fetch(url)
       .then(res => res.json())
       .then(function(json) {
         //derstructed incoming object keys match the state objects
-        that.setState({ ...json.recipe[0], comments: json.comments });
+        that.setState({ ...json[0] });
       });
   }
 
@@ -56,17 +55,10 @@ class RecipeDetailed extends Component {
     });
   }
 
-  /*when a new comment is added this tells the RecipeDetailed component
-  that a change has been made to its child and it should update its current information*/
-  newComment() {
-    this.fetchRecipeInfo();
-  }
-
   renderAdmin() {
     if (!this.props.auth) {
       return;
     }
-
     if (process.env.REACT_APP_ID_KEY === this.props.auth[process.env.REACT_APP_KEY_NAME]) {
       return (
         <Link to={`/${this.state.title}/${this.state._id}/edit/recipe`}>
@@ -94,7 +86,7 @@ class RecipeDetailed extends Component {
             <RecipeInstructions detailedInstructions={this.state.detailedInstructions} />
           </InstructionsContainer>
           <RecipeDetailedImages imageInstructions={this.state.imageInstructions} imagePath={imagePath} />
-          <Comments newComment={() => this.newComment()} comments={this.state.comments} recipeId={this.state._id} />
+          <Comments recipeId={this.state._id} />
         </RecipeContainer>
       </div>
     );

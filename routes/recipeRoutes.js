@@ -1,30 +1,10 @@
-const mongoose = require('mongoose');
-const Recipe = mongoose.model('recipes');
-const Comment = mongoose.model('comments');
+const RecipesController = require('../controllers/recipes_controller');
+const requireLogin = require('../middlewares/requireLogin');
+const recipeDataManipulation = require('../middlewares/recipeDataManipulation');
 
 module.exports = app => {
-  app.get('/api/recipes/:search?', async (req, res) => {
-    const recipe = await Recipe.find({ title: new RegExp(req.params.search, 'i') }).sort({ dateCreated: -1 });
-    // await console.log(recipe);
-    await res.send(recipe);
-  });
-
-  app.get('/api/detailed_recipe/:id', async (req, res) => {
-    const recipe = await Recipe.find({ _id: req.params.id });
-    const comments = await Comment.find({ recipeId: req.params.id });
-    const recipeObject = { recipe: recipe, comments: comments };
-    await res.send(recipeObject);
-  });
-
-  app.post('/api/comments/:recipeId', async (req, res) => {
-    const commentObj = req.body;
-    const { recipeId, author, comment } = commentObj;
-    const newComment = await new Comment({ recipeId, author, comment, dateCreated: Date.now() });
-    // await console.log(newComment);
-    try {
-      await newComment.save();
-    } catch (err) {
-      res.status(422).send(err);
-    }
-  });
+  app.post('/api/recipes', recipeDataManipulation, RecipesController.create);
+  app.get('/api/recipes', RecipesController.index);
+  app.put('/api/recipes/:id', recipeDataManipulation, RecipesController.edit);
+  app.delete('/api/recipes/:id', RecipesController.delete);
 };

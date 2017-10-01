@@ -47,8 +47,7 @@ class RecipeList extends Component {
   fetchData(path) {
     path = path.toLowerCase();
     const that = this;
-    let url = `/api/${path}/${this.state.search}`;
-
+    let url = `/api/${path}?search=${this.state.search}`;
     fetch(url)
       .then(res => res.json())
       .then(function(json) {

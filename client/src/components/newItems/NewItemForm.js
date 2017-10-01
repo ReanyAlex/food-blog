@@ -67,7 +67,7 @@ class NewRecipeForm extends Component {
         <a href="/api/logout">Logout</a>
         {this.props.values.edit ? (
           <Button className="btn btn-danger" onClick={this.props.handleDelete}>
-            <Link to="/recipes">DELETE</Link>
+            <Link to="/">DELETE</Link>
           </Button>
         ) : (
           'no delete button'

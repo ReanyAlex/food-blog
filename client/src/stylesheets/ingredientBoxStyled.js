@@ -25,7 +25,7 @@ const Name = styled.h3`
   font-size: 1.25rem;
 `;
 
-const Description = styled.p`
+const Description = styled.div`
   width: 95%;
   padding-left: 2.5%;
 `;

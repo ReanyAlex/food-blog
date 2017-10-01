@@ -4,11 +4,11 @@ import React from 'react';
 import { Image, Caption } from '../../stylesheets/recipeDetailed/recipeDetailedImagesStyled';
 
 export default ({ imageInstructions, imagePath }) => {
-  console.log(imagePath);
+  // console.log(imagePath);
   return (
     <div>
       {imageInstructions.map(instruction => {
-        console.log(instruction);
+        // console.log(instruction);
         return (
           <div key={instruction._id}>
             <figure>
