@@ -4,7 +4,6 @@ module.exports = {
   create(req, res, next) {
     const recipesProps = req.body;
     recipesProps.date = new Date();
-    console.log(recipesProps);
     Recipe.create(recipesProps)
       .then(recipes => res.send(recipes))
       .catch(next);
@@ -35,7 +34,6 @@ module.exports = {
 
   delete(req, res, next) {
     const id = req.params.id;
-    console.log(id);
     Recipe.findByIdAndRemove(id)
       .then(recipe => res.status(204).send(recipe))
       .catch(next);

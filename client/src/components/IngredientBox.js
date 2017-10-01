@@ -13,7 +13,11 @@ class IngredientBox extends Component {
       return;
     }
 
-    if (process.env.REACT_APP_ID_KEY === this.props.auth[process.env.REACT_APP_KEY_NAME]) {
+    if (
+      process.env.REACT_APP_ID_KEY === this.props.auth[process.env.REACT_APP_KEY_NAME] ||
+      //for developement only
+      process.env.REACT_APP_ID_KEY === 'admin'
+    ) {
       return (
         <Link to={`/${name}/${id}/edit/ingredient`}>
           <span>Edit</span>
@@ -28,7 +32,7 @@ class IngredientBox extends Component {
         {this.props.ingredients.map(ingredient => {
           return (
             <Box key={ingredient._id}>
-              <Image src={`/images/ingredients/${ingredient.image}.jpg`} alt={ingredient.name} />
+              <Image src={`images/ingredients/${ingredient.image}.jpg`} alt={ingredient.name} />
               <Description>
                 <Name>{ingredient.name}</Name>
                 {ingredient.description}

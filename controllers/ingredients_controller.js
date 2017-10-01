@@ -15,7 +15,6 @@ module.exports = {
 
     Ingredient.find({ name: new RegExp(search, 'i') })
       .then(ingredients => {
-        console.log(ingredients);
         res.send(ingredients);
       })
       .catch(next);

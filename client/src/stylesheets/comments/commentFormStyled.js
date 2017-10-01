@@ -72,8 +72,13 @@ const Button = styled.button`
     width: 200px;
   }
 
+<<<<<<< HEAD
   @media only screen and (min-width: 1200px) {
     width: 250px;
+=======
+  @media only screen and (min-width: 990px) {
+    width: 200px;
+>>>>>>> 886cc49a2a8c1997a49e4998fe8a34eef319d976
   }
 `;
 

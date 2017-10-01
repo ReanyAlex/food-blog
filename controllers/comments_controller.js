@@ -15,7 +15,6 @@ module.exports = {
 
     Comment.find({ recipeId: id })
       .then(comments => {
-        console.log(comments);
         res.send(comments);
       })
       .catch(next);
