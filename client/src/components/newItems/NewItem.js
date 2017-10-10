@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import Header from '../Header';
 import NewItemForm from './NewItemForm';
 
@@ -53,55 +54,49 @@ class NewItem extends Component {
     const name = this.props.match.params.title.toLowerCase();
     const url = `/api/${path}s?search=${name}`;
 
-    fetch(url)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(json => {
-        if (path === 'recipe') {
-          //Manipulate the fetched recipe data into displayable
-          //form to make editing easier
-          const recipe = that.recipeDataManipulation(json[0]);
-
-          //destructed incoming object keys match the state objects
-          that.setState({ ...recipe, comments: json.comments });
-        } else if (path === 'ingredient') {
-          that.setState({ ...json[0] });
-        }
-      });
+    axios.get(url).then(res => {
+      if (path === 'recipe') {
+        //Manipulate the fetched recipe data into displayable
+        //form to make editing easier
+        const recipe = that.recipeDataManipulation(res.data[0]);
+        //destructed incoming object keys match the state objects
+        that.setState({ ...recipe });
+      } else if (path === 'ingredient') {
+        that.setState({ ...res.data[0] });
+      }
+    });
   }
 
   //DELETE ------------------
 
   handleDelete() {
     // console.log('Delete');
-    const id = this.props.match.params.id;
+    const { id } = this.props.match.params;
     const url = `/api/${this.state.path}s/${id}`;
-    fetch(url, {
-      method: 'DELETE'
-    });
+
+    axios.delete(url);
   }
 
   //------------------EDIT MODE -----------------------------
 
-  handleChange = this.handleChange.bind(this);
-  handleSubmit = this.handleSubmit.bind(this);
+  // handleChange = this.handleChange.bind(this);
+  // handleSubmit = this.handleSubmit.bind(this);
 
   handleChange(event) {
     const state = this.state;
     state[event.target.name] = event.target.value;
 
-    this.setState(state);
-    this.setState({ id: this.props.auth[process.env.REACT_APP_KEY_NAME] });
+    this.setState({ ...state, id: this.props.auth[process.env.REACT_APP_KEY_NAME] });
+    // this.setState({ id: this.props.auth[process.env.REACT_APP_KEY_NAME] });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    let method = '';
+    // let method = '';
     let url = '';
     let headerBody = {};
 
-    this.state.edit ? (method = `PUT`) : (method = 'POST');
+    // this.state.edit ? (method = `PUT`) : (method = 'POST');
 
     this.state.edit ? (url = `/api/${this.state.path}s/${this.state._id}`) : (url = `/api/${this.state.path}s`);
 
@@ -130,14 +125,8 @@ class NewItem extends Component {
       };
     }
 
-    fetch(url, {
-      method: method,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(headerBody)
-    });
+    //different call depending on if we are in edit mode or not
+    this.state.edit ? axios.put(url, headerBody) : axios.post(url, headerBody);
   }
 
   render() {
@@ -155,9 +144,9 @@ class NewItem extends Component {
           <NewItemForm
             path={this.state.path}
             values={this.state}
-            handleSubmit={event => this.handleSubmit(event)}
-            handleChange={event => this.handleChange(event)}
-            handleDelete={() => this.handleDelete()}
+            handleSubmit={this.handleSubmit.bind(this)}
+            handleChange={this.handleChange.bind(this)}
+            handleDelete={this.handleDelete.bind(this)}
           />
         </Container>
       </div>

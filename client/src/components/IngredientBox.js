@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import * as actions from '../actions';
 
 // styled-components keeped in a seperate file
 import { Box, Image, Name, Description } from '../stylesheets/ingredientBoxStyled';
@@ -50,4 +48,4 @@ function mapStateToProps({ auth }) {
   return { auth };
 }
 
-export default connect(mapStateToProps, actions)(withRouter(IngredientBox));
+export default connect(mapStateToProps)(IngredientBox);

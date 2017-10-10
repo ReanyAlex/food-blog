@@ -5,13 +5,15 @@ import { LandingContainer, ChineseHeader, EnglishHeader } from '../stylesheets/l
 //for hover effect
 import '../stylesheets/landing.css';
 
-export default () => (
-  <LandingContainer>
-    <Link to="/recipes" className="landing-link">
-      <div className="landing-header-container">
-        <ChineseHeader id="landing_chinese">老外烹饪</ChineseHeader>
-        <EnglishHeader id="landing_english">American Cooks Chinese</EnglishHeader>
-      </div>
-    </Link>
-  </LandingContainer>
+export default props => (
+  <div>
+    <LandingContainer>
+      <Link to="/recipes" className="landing-link">
+        <div className="landing-header-container">
+          <ChineseHeader id="landing_chinese">老外烹饪</ChineseHeader>
+          <EnglishHeader id="landing_english">American Cooks Chinese</EnglishHeader>
+        </div>
+      </Link>
+    </LandingContainer>
+  </div>
 );

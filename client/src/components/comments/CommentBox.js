@@ -1,9 +1,9 @@
 import React from 'react';
-
+import axios from 'axios';
 // styled-components keeped in a seperate file
 import { CommentContainer, AuthorHeader, Author, PostDate, Comment } from '../../stylesheets/comments/commentBoxStyled';
 
-export default ({ comments }) => {
+export default ({ comments, refreshCommentList }) => {
   const dateOptions = {
     weekday: 'long',
     year: 'numeric',
@@ -12,6 +12,11 @@ export default ({ comments }) => {
     hour: 'numeric',
     minute: 'numeric',
     localeMatcher: 'best fit'
+  };
+
+  const deleteComment = id => {
+    const url = `/api/comments/${id}`;
+    axios.delete(url).then(refreshCommentList);
   };
 
   return (
@@ -28,6 +33,7 @@ export default ({ comments }) => {
             </AuthorHeader>
             <PostDate>{date}</PostDate>
             <Comment>{comment.comment}</Comment>
+            <button onClick={() => deleteComment(comment._id)}>Delete</button>
           </CommentContainer>
         );
       })}

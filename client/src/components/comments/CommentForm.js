@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 // styled-components keeped in a seperate file
 import {
   Form,
@@ -14,30 +14,25 @@ import {
 
 class CommentForm extends Component {
   state = {
-    newCommentForm: false
+    newCommentForm: false,
+    author: '',
+    comment: ''
   };
 
   handleSubmit(event) {
     event.preventDefault();
-    const recipeId = this.props.recipeId;
-    const author = document.querySelector('#author').value;
-    const comment = document.querySelector('#comment').value;
-
+    const { recipeId } = this.props;
+    const { author, comment } = this.state;
     const newComment = { recipeId, author, comment };
 
     let url = `/api/comments`;
 
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newComment)
-    });
+    axios
+      .post(url, newComment)
+      .then(() => this.setState({ newCommentForm: false }))
+      .then(this.props.refreshCommentList);
 
-    this.setState({ newCommentForm: false });
-    this.props.newComment();
+    this.setState({ author: '', comment: '' });
   }
 
   cancelForm(event) {
@@ -51,18 +46,33 @@ class CommentForm extends Component {
     }
 
     return (
-      <Form onSubmit={event => this.handleSubmit(event)}>
+      <Form onSubmit={this.handleSubmit.bind(this)}>
         <InputContainer>
           <Label htmlFor="author">
             <Span>Your Name:</Span>
-            <AuthorInput required type="text" name="author" id="author" />
+            <AuthorInput
+              required
+              type="text"
+              name="author"
+              id="author"
+              value={this.state.author}
+              onChange={event => this.setState({ author: event.target.value })}
+            />
           </Label>
           <Label htmlFor="comment">
             <Span>Comment:</Span>
-            <CommentInput required rows="3" cols="20" name="comment" id="comment" />
+            <CommentInput
+              required
+              rows="3"
+              cols="20"
+              name="comment"
+              id="comment"
+              value={this.state.comment}
+              onChange={event => this.setState({ comment: event.target.value })}
+            />
           </Label>
         </InputContainer>
-        <Button float="left" onClick={event => this.cancelForm(event)}>
+        <Button float="left" onClick={this.cancelForm.bind(this)}>
           Cancel
         </Button>
         <Button float="right">

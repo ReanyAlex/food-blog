@@ -3,6 +3,7 @@ const Comment = require('../models/Comment');
 module.exports = {
   create(req, res, next) {
     const commentProps = req.body;
+    console.log('comment props', commentProps);
     commentProps.dateCreated = Date.now();
 
     Comment.create(commentProps)
@@ -18,7 +19,7 @@ module.exports = {
         res.send(comments);
       })
       .catch(next);
-  }
+  },
   //
   // edit(req, res, next) {
   //   const id = req.params.id;
@@ -30,11 +31,11 @@ module.exports = {
   //     .catch(next);
   // },
   //
-  // delete(req, res, next) {
-  //   const id = req.params.id;
-  //
-  //   Comment.findByIdAndRemove(id)
-  //     .then(comment => res.status(204).send(comment))
-  //     .catch(next);
-  // }
+  delete(req, res, next) {
+    const id = req.params.id;
+    console.log('remove', id);
+    Comment.findByIdAndRemove(id)
+      .then(comment => res.status(204).send(comment))
+      .catch(next);
+  }
 };

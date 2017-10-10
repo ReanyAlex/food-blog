@@ -5,7 +5,7 @@ import { SearchForm, HeaderTitle, SearchInput } from '../stylesheets/searchStyle
 export default ({ path, updateSearch }) => {
   return (
     <div>
-      <HeaderTitle>{path === 'recipes' ? 'Newly added Recipes:' : 'Ingredients:'}</HeaderTitle>
+      <HeaderTitle>{path === '/recipes' ? 'Newly added Recipes:' : 'Ingredients:'}</HeaderTitle>
       <SearchForm onSubmit={e => e.preventDefault()}>
         <SearchInput
           type="text"
@@ -17,4 +17,3 @@ export default ({ path, updateSearch }) => {
     </div>
   );
 };
-// form-inline

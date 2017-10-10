@@ -7,6 +7,8 @@ import Landing from './Landing';
 import Path from './Path';
 import RecipeDetailed from './recipeDetailed/RecipeDetailed';
 import NewItem from './newItems/NewItem';
+import ItemList from './ItemList';
+import About from './About';
 
 require('../stylesheets/app.css');
 
@@ -20,8 +22,10 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Landing} />
+          <Route path="/about" component={Path(About)} />
+          <Route path="/recipes" component={Path(ItemList)} />
+          <Route path="/ingredients" component={Path(ItemList)} />
           <Route exact path="/new/:path" component={NewItem} />
-          <Route exact path="/:path" component={Path} />
           <Route exact path="/:title/:id" component={RecipeDetailed} />
           <Route exact path="/:title/:id/:edit/:path" component={NewItem} />
         </Switch>

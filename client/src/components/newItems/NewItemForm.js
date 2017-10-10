@@ -33,7 +33,7 @@ class NewRecipeForm extends Component {
               name={form.name}
               id={form.name}
               value={this.props.values[form.name]}
-              onChange={event => this.props.handleChange(event)}
+              onChange={this.props.handleChange.bind(this)}
             />
           </Label>
         );
@@ -46,7 +46,7 @@ class NewRecipeForm extends Component {
               cols="40"
               name={form.name}
               value={this.props.values[form.name]}
-              onChange={event => this.props.handleChange(event)}
+              onChange={this.props.handleChange.bind(this)}
             />
           </Label>
         );
@@ -59,7 +59,7 @@ class NewRecipeForm extends Component {
       <div>
         <form>
           {this.renderForms()}
-          <button onClick={event => this.props.handleSubmit(event)}>
+          <button onClick={this.props.handleSubmit.bind(this)}>
             {/*Commented out to allow to easily add a bunch of dummy recipes  */}
             <Link to="/">{this.props.values.edit ? `Submit Edit` : 'Submit'}</Link>
           </button>

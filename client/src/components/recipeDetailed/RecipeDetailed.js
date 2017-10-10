@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import * as actions from '../../actions';
+
 import Header from '../Header';
 import Comments from '../comments/Comments';
 import RecipeIngredients from './RecipeDetailedIngredients';
@@ -36,14 +36,12 @@ class RecipeDetailed extends Component {
 
   fetchRecipeInfo() {
     const that = this;
-    const title = this.props.match.params.title;
+    const { title } = this.props.match.params;
     const url = `/api/recipes?search=${title}`;
-    fetch(url)
-      .then(res => res.json())
-      .then(function(json) {
-        //derstructed incoming object keys match the state objects
-        that.setState({ ...json[0] });
-      });
+    axios.get(url).then(function(res) {
+      //derstructed incoming object keys match the state objects
+      that.setState({ ...res.data[0] });
+    });
   }
 
   renderCatagories() {
@@ -71,22 +69,23 @@ class RecipeDetailed extends Component {
   render() {
     //formatted to allow access to image folder structure images/recipe_title/imageName.jpg
     let imagePath = `/images/${this.state.title.toLowerCase().replace(/ /g, '-')}`;
+    const { title, description, image, ingredients, detailedInstructions, imageInstructions, _id } = this.state;
 
     return (
       <div>
         <Header />
         {this.renderAdmin()}
         <RecipeContainer>
-          <TitleHeader>{this.state.title}</TitleHeader>
+          <TitleHeader>{title}</TitleHeader>
           <CatagoriesHeader>Catagories: [ {this.renderCatagories()} ]</CatagoriesHeader>
-          <DescriptionHeader>{this.state.description}</DescriptionHeader>
-          <Image src={`${imagePath}/${this.state.image}.jpg`} alt={this.state.title} />
+          <DescriptionHeader>{description}</DescriptionHeader>
+          <Image src={`${imagePath}/${image}.jpg`} alt={title} />
           <InstructionsContainer>
-            <RecipeIngredients ingredients={this.state.ingredients} />
-            <RecipeInstructions detailedInstructions={this.state.detailedInstructions} />
+            <RecipeIngredients ingredients={ingredients} />
+            <RecipeInstructions detailedInstructions={detailedInstructions} />
           </InstructionsContainer>
-          <RecipeDetailedImages imageInstructions={this.state.imageInstructions} imagePath={imagePath} />
-          <Comments recipeId={this.state._id} />
+          <RecipeDetailedImages imageInstructions={imageInstructions} imagePath={imagePath} />
+          <Comments recipeId={_id} />
         </RecipeContainer>
       </div>
     );
@@ -97,4 +96,4 @@ function mapStateToProps({ auth }) {
   return { auth };
 }
 
-export default connect(mapStateToProps, actions)(withRouter(RecipeDetailed));
+export default connect(mapStateToProps)(RecipeDetailed);

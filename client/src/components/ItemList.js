@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
+import axios from 'axios';
 import RecipeBox from './RecipeBox';
 import IngredientBox from './IngredientBox';
 import Search from './Search';
@@ -17,25 +19,27 @@ class RecipeList extends Component {
 
   //initial data fetch based on path
   componentDidMount() {
-    this.setState({ path: this.props.match });
-    this.fetchData(this.props.match);
+    this.setFetch(this.props.match.path);
   }
   //data fetch when click on a new link in header
   componentWillReceiveProps(nextProps) {
-    this.setState({ path: nextProps.match });
-    this.fetchData(nextProps.match);
+    this.setFetch(this.props.match.path);
   }
   //data fetch when type in the search field
   componentDidUpdate(prevProps, prevState) {
     if (prevState.search === this.state.search) {
       return;
     }
-    this.fetchData(this.props.match);
+    this.fetchData(this.props.match.path);
   }
 
+  setFetch(path) {
+    this.setState({ path });
+    this.fetchData(path);
+  }
   // the updateIndex functions is passed as a prop to the pagination component
-  updateIndex(index) {
-    this.setState({ displayIndex: index });
+  updateIndex(displayIndex) {
+    this.setState({ displayIndex });
   }
   // the updateSearch functions is passed as a prop to the seatch component
   updateSearch(search) {
@@ -45,13 +49,19 @@ class RecipeList extends Component {
   //fetch data depending on path match and search url
   //access through express either IngredientsSchema or RecipeSchema
   fetchData(path) {
-    path = path.toLowerCase();
+    const pathName = path
+      .toLowerCase()
+      .split('')
+      .splice(1)
+      .join('');
+
     const that = this;
-    let url = `/api/${path}?search=${this.state.search}`;
-    fetch(url)
-      .then(res => res.json())
-      .then(function(json) {
-        that.setState({ [path]: json });
+    let url = `/api/${pathName}?search=${this.state.search}`;
+
+    axios
+      .get(url)
+      .then(function(res) {
+        that.setState({ [pathName]: res.data });
       })
       .catch(function(err) {
         console.log(err);
@@ -59,7 +69,7 @@ class RecipeList extends Component {
   }
 
   recipesOrIngredients() {
-    return this.state.path === 'recipes' ? (
+    return this.state.path === '/recipes' ? (
       <RecipeBox displayIndex={this.state.displayIndex} recipes={this.state.recipes} />
     ) : (
       <IngredientBox ingredients={this.state.ingredients} />
@@ -67,21 +77,28 @@ class RecipeList extends Component {
   }
 
   showPagination() {
-    if (this.state.path !== 'recipes') return;
-    return (
-      <Pagination
-        updateIndex={this.updateIndex.bind(this)}
-        recipes={this.state.recipes}
-        displayIndex={this.state.displayIndex}
-      />
-    );
+    if (this.state.path === '/recipes') {
+      return (
+        <Pagination
+          updateIndex={index => this.updateIndex(index)}
+          recipes={this.state.recipes}
+          displayIndex={this.state.displayIndex}
+        />
+      );
+    }
   }
 
   render() {
+    // limits the amount of times the database is accessed.
+    // No longer by every change to input waits till you are done typing then on delay
+    const recipeSearch = _.debounce(search => {
+      this.updateSearch(search);
+    }, 300);
+
     return (
       <Container>
         <SearchHeader>
-          <Search updateSearch={this.updateSearch.bind(this)} path={this.state.path} />
+          <Search updateSearch={recipeSearch} path={this.state.path} />
         </SearchHeader>
         {this.recipesOrIngredients()}
         {this.showPagination()}

@@ -23,14 +23,10 @@ class Pagination extends Component {
 
   renderPagination(index) {
     if (index === this.props.displayIndex) {
-      return (
-        <PaginationIndexCurrent key={index} onClick={() => this.props.updateIndex(index)}>
-          {index}
-        </PaginationIndexCurrent>
-      );
+      return <PaginationIndexCurrent key={index}>{index}</PaginationIndexCurrent>;
     }
     return (
-      <PaginationIndex key={index} onClick={() => this.props.updateIndex(index)}>
+      <PaginationIndex key={index} onClick={e => this.props.updateIndex(e.target.innerHTML)}>
         {index}
       </PaginationIndex>
     );

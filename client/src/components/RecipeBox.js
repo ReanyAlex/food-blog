@@ -15,14 +15,15 @@ export default ({ displayIndex, recipes }) => {
   return (
     <div>
       {recipesToBeDisplayed.map(recipe => {
-        let imagePath = `/images/${recipe.title.toLowerCase().replace(/ /g, '-')}`;
+        const imagePath = `/images/${recipe.title.toLowerCase().replace(/ /g, '-')}`;
+        const { _id, title, image } = recipe;
         return (
-          <Box key={recipe._id}>
-            <Link to={`/${recipe.title}/${recipe._id}`} className="recipe-link">
+          <Box key={_id}>
+            <Link to={`/${title}/${_id}`} className="recipe-link">
               <ImageWrapper>
-                <Image src={`${imagePath}/${recipe.image}.jpg`} alt={recipe.title} />
+                <Image src={`${imagePath}/${image}.jpg`} alt={title} />
               </ImageWrapper>
-              <Title>{recipe.title}</Title>
+              <Title>{title}</Title>
             </Link>
           </Box>
         );
