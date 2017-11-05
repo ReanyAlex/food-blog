@@ -20,6 +20,7 @@ module.exports = {
       })
       .catch(next);
   },
+
   //
   // edit(req, res, next) {
   //   const id = req.params.id;
@@ -30,7 +31,6 @@ module.exports = {
   //     .then(comment => res.send(comment))
   //     .catch(next);
   // },
-  //
   delete(req, res, next) {
     const id = req.params.id;
     console.log('remove', id);
