@@ -12,7 +12,7 @@ require('./models/Comment');
 require('./services/passport');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://test:test@ds133104.mlab.com:33104/food-blog-dev');
+mongoose.connect(keys.mongoURI);
 
 const app = express();
 
