@@ -8,23 +8,35 @@ import '../stylesheets/landing.css';
 
 class Landing extends Component {
   state = {
-    show: true
+    show: true,
+    push: null,
+    fade: null
   };
+
   componentDidMount() {
     this.fadeOut();
   }
 
   sendToRecipes() {
-    setTimeout(() => {
+    const pushTimeout = setTimeout(() => {
       this.props.history.push('/recipes');
     }, 6000);
+
+    this.setState({ push: pushTimeout });
   }
 
   fadeOut() {
-    setTimeout(() => {
+    const fadeTimeout = setTimeout(() => {
       this.setState({ show: false });
     }, 5000);
+
     this.sendToRecipes();
+    this.setState({ fade: fadeTimeout });
+  }
+
+  stopTimeOut() {
+    window.clearTimeout(this.state.push);
+    window.clearTimeout(this.state.fade);
   }
 
   render() {
@@ -42,7 +54,7 @@ class Landing extends Component {
           {this.state.show ? (
             <LandingContainer>
               <Link to="/recipes" className="landing-link">
-                <div className="landing-header-container">
+                <div className="landing-header-container" onClick={() => this.stopTimeOut()}>
                   <ChineseHeader id="landing_chinese">老外烹饪</ChineseHeader>
                   <EnglishHeader id="landing_english">American Cooks Chinese</EnglishHeader>
                 </div>
